@@ -1,0 +1,33 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile",
+            "type": "shell",
+            "command": "javac",
+            "args": ["*.java"],
+            "options": {
+                "cwd": "${workspaceRoot}/source"
+            }
+        }, 
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "rm",
+            "args": ["*.class"],
+            "options": {
+                "cwd": "${workspaceRoot}/source"
+            }
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "java ${fileBasenameNoExtension}",
+            "options": {
+                "cwd": "${workspaceRoot}/source"
+            }
+        }
+    ]
+}
