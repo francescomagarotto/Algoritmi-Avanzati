@@ -1,12 +1,18 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.List;
+
 public class Graph {
 
   ArrayList<Node> V;
-  ArrayList<Edge> E;
+  List<Edge> E;
   ArrayList<LinkedList<Edge>> adjList;
   HashMap<Integer, LinkedList<Integer>> map = new HashMap<>();
+
+  void setE (List<Edge> edgeList) {
+    E = edgeList;
+  }
 
   // add an edge from source to destination
   void addEdge(int src, int dest) {
@@ -21,6 +27,11 @@ public class Graph {
       l.add(dest);
       map.put(src, l);
     }
+  }
+
+  // add weighted edge from source to destination
+  void addEdge(int src, int dest, int weight) {
+    E.add(new Edge(src, dest, weight));
   }
 
   public Graph() {
