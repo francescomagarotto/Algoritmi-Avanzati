@@ -1,54 +1,33 @@
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GraphReader {
-    private Path pathFile;
-    public GraphReader(String fileName) {
-        this.pathFile = Paths.get(fileName);
-
-    }
-
-    private String explodeFirstLine(int index) {
-        // Non uso stringhe statiche intenzionalmente
-        String info = new String();
-        try {
-            info = Files.lines(pathFile).findFirst().get();
-        } catch (IOException e) {
-        }
-        String result = info.split(" ")[index].trim();
-        return result;
-    }
-
-    public int getNumberOfVertex() {
-        return Integer.parseInt(explodeFirstLine(0));
-    }
-
-    public int getNumberOfEdges() {
-        return Integer.parseInt(explodeFirstLine(1));
-    }
-
-    private static Edge lineToEdge(String line) {
-      String[] info = line.split(" ");
-      int src = Integer.parseInt(info[0]);
-      int dest = Integer.parseInt(info[1]);
-      int weight = Integer.parseInt(info[2]);
-      return new Edge(src, dest, weight);
-    }
-
     //for now it creates a graph with only the list of edges
-    public Graph getGraph() {
+    public static Graph getGraph(String path) {
       Graph graph = new Graph();
       try {
+        Iterator<String> iterator = Files.lines(Paths.get(path)).iterator();
+        String[] dimension = iterator.next().split(" ");
+        HashSet<Node> nodeSet = new HashSet<Node>(Integer.parseInt(dimension[0]));
+        List<Edge> edgeList = new ArrayList<Edge>(Integer.parseInt(dimension[1]));
 
-        List<Edge> edgeList = Files.lines(pathFile).skip(1)
-                                                   .map(GraphReader::lineToEdge)
-                                                   .collect(Collectors.toList());
+        while(iterator.hasNext()) {
+          String[] info = iterator.next().split(" ");
+          int src = Integer.parseInt(info[0]);
+          int dest = Integer.parseInt(info[1]);
+          int weight = Integer.parseInt(info[2]);
+          nodeSet.add(new Node(src));
+          nodeSet.add(new Node(dest));
+          edgeList.add(new Edge(src, dest, weight));
+        }
         graph.setE(edgeList);
+        graph.setV(new LinkedList<>(nodeSet));
 
-      } catch (IOException e) {
+      } catch (Exception e) {
         e.printStackTrace();
       }
 
