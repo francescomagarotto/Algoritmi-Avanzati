@@ -6,7 +6,7 @@ public class Graph {
 
   List<Node> V;
   List<Edge> E;
-  HashMap<Integer, LinkedList<Integer>> map = new HashMap<>();
+  HashMap<Integer, LinkedList<Edge>> map = new HashMap<>();
 
   void setE (List<Edge> edgeList) {
     E = edgeList;
