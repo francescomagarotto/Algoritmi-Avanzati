@@ -29,11 +29,11 @@ public class Prim {
 
 
     //initialize data structures
-    for (Node u : G.V) {
-      key.put(u.id, Integer.MAX_VALUE);
-      parent.put(u.id, -1);
-      Q.add(u.id);
-      minHeap.add(u.id);
+    for (Integer id : G.V) {
+      key.put(id, Integer.MAX_VALUE);
+      parent.put(id, -1);
+      Q.add(id);
+      minHeap.add(id);
     }
 
     key.replace(s, 0);

@@ -3,35 +3,41 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 
 public class GraphReader {
     //for now it creates a graph with only the list of edges
     public static Graph getGraph(String path) {
-      Graph graph = new Graph();
       try {
         Iterator<String> iterator = Files.lines(Paths.get(path)).iterator();
         String[] dimension = iterator.next().split(" ");
-        HashSet<Node> nodeSet = new HashSet<Node>(Integer.parseInt(dimension[0]));
         List<Edge> edgeList = new ArrayList<Edge>(Integer.parseInt(dimension[1]));
-
+        HashMap<Integer, LinkedList<Edge>> map = new HashMap<>();
+        
         while(iterator.hasNext()) {
           String[] info = iterator.next().split(" ");
           int src = Integer.parseInt(info[0]);
           int dest = Integer.parseInt(info[1]);
           int weight = Integer.parseInt(info[2]);
-          nodeSet.add(new Node(src));
-          nodeSet.add(new Node(dest));
-          edgeList.add(new Edge(src, dest, weight));
+          Edge e = new Edge(src, dest, weight);
+          if(map.containsKey(src)) {
+        	  map.get(src).add(e);
+          }
+          else {
+        	  LinkedList<Edge> xe = new LinkedList<Edge>();
+        	  xe.add(e);
+        	  map.put(src, xe);
+          }
+          edgeList.add(e);
+          
         }
-        graph.setE(edgeList);
-        graph.setV(new LinkedList<>(nodeSet));
+        return new Graph(edgeList, new LinkedList<>(map.keySet()), map);
 
       } catch (Exception e) {
         e.printStackTrace();
       }
 
-      return graph;
+      return new Graph();
     }
 
     // TODO leggere le altre linee ed creare un grafo

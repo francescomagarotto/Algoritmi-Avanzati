@@ -4,16 +4,23 @@ import java.util.List;
 
 public class Graph {
 
-  List<Node> V;
+  List<Integer> V;
   List<Edge> E;
-  HashMap<Integer, LinkedList<Edge>> map = new HashMap<>();
+  HashMap<Integer, LinkedList<Edge>> map;
 
   void setE (List<Edge> edgeList) {
     E = edgeList;
   }
 
-  void setV (List<Node> nodeList) {
+  void setV (List<Integer> nodeList) {
     V = nodeList;
+  }
+  
+  public Graph(List<Edge> edgeList, List<Integer> nodeList, HashMap<Integer, LinkedList<Edge>> adjList) {
+	  V = nodeList;
+	  E = edgeList;
+	  map = adjList;
+	  
   }
 
   // add weighted edge from source to destination
