@@ -16,7 +16,9 @@ public class Prim {
   private static class NodeComparator implements Comparator<Integer> {
     @Override
     public int compare(Integer n1, Integer n2) {
-      return (key.get(n1) - key.get(n2));
+      Integer key1 = key.get(n1);
+      Integer key2 = key.get(n2);
+      return key1.compareTo(key2);
     }
   }
 
@@ -48,13 +50,17 @@ public class Prim {
           //if the new edge is lighter update parent and key for the node v
           parent.replace(v, u);
           key.replace(v, edge.weight);
+          //update the heap
+          minHeap.remove(v);
+          minHeap.add(v);
         }
       }
     }
 
     List<Edge> A = new LinkedList<>();  //minimum spanning tree
     for (Integer node : key.keySet()) {
-      A.add(new Edge(node, parent.get(node), key.get(node)));
+      if (node != s)
+        A.add(new Edge(node, parent.get(node), key.get(node)));
     }
 
     return A;
