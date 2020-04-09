@@ -46,6 +46,4 @@ public class GraphReader {
 
     return new Graph();
   }
-
-  // TODO leggere le altre linee ed creare un grafo
 }

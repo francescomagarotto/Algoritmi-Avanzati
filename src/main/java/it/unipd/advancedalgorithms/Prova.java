@@ -17,32 +17,29 @@ import it.unipd.advancedalgorithms.graph.*;
 import it.unipd.advancedalgorithms.algorithms.*;
 
 public class Prova {
-
   public static void main(final String[] args) throws Exception {
-    List<String[]> kruskalUnionFindTimes = new ArrayList<String[]>();
-    List<String[]> kruskalTimes = new ArrayList<>();
-    List<String[]> primTimes = new ArrayList<>();
+    final List<String[]> kruskalUnionFindTimes = new ArrayList<String[]>();
+    final List<String[]> kruskalTimes = new ArrayList<>();
+    final List<String[]> primTimes = new ArrayList<>();
     try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
       paths.filter(Files::isRegularFile).forEach(file -> {
-        Graph g = GraphReader.getGraph("datasets/" + file.getFileName().toString());
-        Integer numberEdges = g.getEdges().size();
-        Long primStartTime = System.nanoTime();
+        String f = file.getFileName().toString();
+        final Graph g = GraphReader.getGraph("datasets/" + f);
+        Integer numberVertex = g.getnVertex();
+        Long time = System.nanoTime();
         Prim.solve(g, 1);
-        Long primEndtTime = primStartTime - System.nanoTime();
-        primTimes.add(new String[] {numberEdges.toString(), primEndtTime.toString()});
-
-        Long kruskalStartTime = System.nanoTime();
+        Long temp = (System.nanoTime() - time)/1000000;
+        primTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
+        time = System.nanoTime();
         Kruskal.MST(g);
-        Long kruskalEndtTime = kruskalStartTime - System.nanoTime();
-        kruskalTimes.add(new String[] {numberEdges.toString(), kruskalEndtTime.toString()});
-
-        long kruskalUStartTime = System.nanoTime();
+        temp = (System.nanoTime() - time)/1000000;
+        kruskalTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
+        time = System.nanoTime();
         KruskalUnionFind.KruskalMST(g);
-        Long kruskalUEndtTime = kruskalUStartTime - System.nanoTime();
-        kruskalUnionFindTimes.add(new String[] {numberEdges.toString(), kruskalUEndtTime.toString()});
-
+        temp = (System.nanoTime() - time)/1000000;
+        kruskalUnionFindTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
       });
-    } catch (Exception e) {
+    } catch (final Exception e) {
     }
 
     printFile("kruskal.csv", kruskalTimes);
@@ -50,7 +47,7 @@ public class Prova {
     printFile("unionkruskal.csv", kruskalUnionFindTimes);
   }
 
-  private static void printFile(String filename, List<String[]> entries) throws IOException {
+  private static void printFile(final String filename, final List<String[]> entries) throws IOException {
     Files.deleteIfExists(Paths.get(filename));
     try (FileOutputStream fos = new FileOutputStream(filename);
                 OutputStreamWriter osw = new OutputStreamWriter(fos, 
