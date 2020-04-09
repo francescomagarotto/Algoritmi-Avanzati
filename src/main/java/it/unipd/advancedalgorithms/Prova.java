@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.stream.Stream;
+
 import it.unipd.advancedalgorithms.graph.*;
 import it.unipd.advancedalgorithms.algorithms.*;
 
@@ -36,6 +37,7 @@ public class Prova {
       });
     } catch (Exception e) {
     }
+
   }
 
   static void printEdge(Edge e) {
