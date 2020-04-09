@@ -18,21 +18,21 @@ public class Prova {
     try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
       paths.filter(Files::isRegularFile).forEach(file -> {
         Graph g = GraphReader.getGraph("datasets/" + file.getFileName().toString());
-
+        int numberEdges = g.getEdges().size();
         long primStartTime = System.nanoTime();
         Prim.solve(g, 1);
         long primEndtTime = primStartTime - System.nanoTime();
-        prim.put(g.getEdges().size(), primEndtTime);
+        prim.put(numberEdges, primEndtTime);
 
         long kruskalStartTime = System.nanoTime();
         Kruskal.MST(g);
         long kruskalEndtTime = kruskalStartTime - System.nanoTime();
-        kruskal.put(g.getEdges().size(), kruskalEndtTime);
+        kruskal.put(numberEdges, kruskalEndtTime);
 
         long kruskalUStartTime = System.nanoTime();
-        System.out.println(file.getFileName().toString() + ": " + KruskalUnionFind.KruskalMST(g));
+        KruskalUnionFind.KruskalMST(g);
         Long kruskalUEndtTime = kruskalUStartTime - System.nanoTime();
-        kruskalU.put(g.getEdges().size(), kruskalUEndtTime);
+        kruskalU.put(numberEdges, kruskalUEndtTime);
 
       });
     } catch (Exception e) {
