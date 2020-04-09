@@ -9,6 +9,13 @@
       "name": "CodeLens (Launch) - Prova",
       "request": "launch",
       "mainClass": "it.unipd.advancedalgorithms.Prova",
+      "projectName": "Algoritmi-Avanzati"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Prova",
+      "request": "launch",
+      "mainClass": "it.unipd.advancedalgorithms.Prova",
       "projectName": "Advanced-Algorithms"
     },
     {
