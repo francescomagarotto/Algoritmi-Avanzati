@@ -14,14 +14,12 @@ public class Kruskal {
     public static Set<Edge> MST(Graph g) {
         Set<Edge> a = new HashSet<>();
         Set<Integer> cyclic = new HashSet<>();
-        List<Edge> orderedList = 
-            g.getEdges().stream().sorted(Comparator.comparingInt(Edge::getWeight))
-            .collect(Collectors.toList());
-        System.out.println(orderedList);
+        List<Edge> orderedList = g.getEdges().stream().sorted(Comparator.comparingInt(Edge::getWeight))
+                .collect(Collectors.toList());
         Iterator<Edge> x = orderedList.iterator();
-        while(a.size() < orderedList.size() && x.hasNext()) {
+        while (a.size() < orderedList.size() && x.hasNext()) {
             Edge e = x.next();
-            if(!(cyclic.contains(e.getStart()) && cyclic.contains(e.getEnd()))) {
+            if (!(cyclic.contains(e.getStart()) && cyclic.contains(e.getEnd()))) {
                 a.add(e);
                 cyclic.add(e.getStart());
                 cyclic.add(e.getEnd());

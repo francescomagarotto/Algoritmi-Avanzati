@@ -8,11 +8,11 @@ import it.unipd.advancedalgorithms.graph.Edge;
 import it.unipd.advancedalgorithms.graph.Graph;
 
 public class KruskalUnionFind {
-  class subset {
+  static class subset {
     int parent, rank;
   }
 
-  int find(subset subsets[], int i) {
+  static int find(subset subsets[], int i) {
     // find root and make root as parent of i (path compression)
     if (subsets[i].parent != i)
       subsets[i].parent = find(subsets, subsets[i].parent);
@@ -20,7 +20,7 @@ public class KruskalUnionFind {
     return subsets[i].parent;
   }
 
-  void Union(subset subsets[], int x, int y) {
+  static void Union(subset subsets[], int x, int y) {
     int xroot = find(subsets, x);
     int yroot = find(subsets, y);
 
@@ -39,14 +39,14 @@ public class KruskalUnionFind {
     }
   }
 
-  class EdgeComparator implements Comparator<Edge> {
+  static class EdgeComparator implements Comparator<Edge> {
     @Override
     public int compare(Edge e1, Edge e2) {
       return e1.getWeight() - e2.getWeight();
     }
   }
 
-  public void KruskalMST(Graph g) {
+  public static Integer KruskalMST(Graph g) {
     Edge result[] = new Edge[g.getnVertex()]; // Tnis will store the resultant MST
 
     for (int i = 0; i < g.getnVertex(); ++i)
@@ -91,13 +91,10 @@ public class KruskalUnionFind {
       // Else discard the next_edge
     }
 
-    // print the contents of result[] to display
-    // the built MST
-    System.out.println("Minimum spanning tree value: ");
     int sum = 0;
     for (i = 0; i < e; ++i) {
       sum += result[i].getWeight();
     }
-    System.out.println(sum);
+    return sum;
   }
 }
