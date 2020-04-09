@@ -1,4 +1,5 @@
 package it.unipd.advancedalgorithms.algorithms;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -9,8 +10,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.PriorityQueue;
 import it.unipd.advancedalgorithms.graph.*;
+
 public class Prim {
   private static Map<Integer, Integer> key;
+
   // Used in minHeap to sort the nodes by key
   private static class NodeComparator implements Comparator<Integer> {
     @Override
@@ -28,7 +31,7 @@ public class Prim {
     PriorityQueue<Integer> minHeap = new PriorityQueue<>(new NodeComparator());
 
     // initialize data structures
-    for (Integer id : G.getV()) {
+    for (Integer id : G.getAdjacencyLists().keySet()) {
       key.put(id, Integer.MAX_VALUE);
       parent.put(id, -1);
       Q.add(id);

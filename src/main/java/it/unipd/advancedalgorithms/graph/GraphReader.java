@@ -1,4 +1,5 @@
 package it.unipd.advancedalgorithms.graph;
+
 import java.nio.file.*;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GraphReader {
-  // for now it creates a graph with only the list of edges
   public static Graph getGraph(String path) {
     try {
       Iterator<String> iterator = Files.lines(Paths.get(path)).iterator();
@@ -21,6 +21,7 @@ public class GraphReader {
         int dest = Integer.parseInt(info[1]);
         int weight = Integer.parseInt(info[2]);
         Edge e = new Edge(src, dest, weight);
+
         if (map.containsKey(src)) {
           map.get(src).add(e);
         } else {
@@ -28,9 +29,16 @@ public class GraphReader {
           xe.add(e);
           map.put(src, xe);
         }
+        if (map.containsKey(dest)) {
+          map.get(dest).add(e);
+        } else {
+          LinkedList<Edge> xe = new LinkedList<Edge>();
+          xe.add(new Edge(dest, src, weight));
+          map.put(dest, xe);
+        }
         edgeList.add(e);
       }
-      return new Graph(edgeList, new LinkedList<>(map.keySet()), map);
+      return new Graph(edgeList, map);
 
     } catch (Exception e) {
       e.printStackTrace();
