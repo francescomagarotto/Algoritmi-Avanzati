@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -26,18 +27,28 @@ public class Prova {
         String f = file.getFileName().toString();
         final Graph g = GraphReader.getGraph("datasets/" + f);
         Integer numberVertex = g.getnVertex();
+
+        //Benchmark Prim
         Long time = System.nanoTime();
-        Prim.solve(g, 1);
+        int prim = Prim.solve(g, 1);
         Long temp = (System.nanoTime() - time)/1000000;
         primTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
+
+        //Benchmark Kruskal
         time = System.nanoTime();
         Kruskal.MST(g);
         temp = (System.nanoTime() - time)/1000000;
         kruskalTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
+
+        //Benchmark Kruskal with UnionFind
         time = System.nanoTime();
-        KruskalUnionFind.KruskalMST(g);
+        int kruskalUF = KruskalUnionFind.KruskalMST(g);
         temp = (System.nanoTime() - time)/1000000;
         kruskalUnionFindTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
+
+        if (prim != kruskalUF) {
+          System.out.println("Errore:  prim:"+prim+" kruskal:"+kruskalUF +"; FILE:"+f);
+        }
       });
     } catch (final Exception e) {
     }

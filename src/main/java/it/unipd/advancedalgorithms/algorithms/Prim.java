@@ -24,7 +24,7 @@ public class Prim {
     }
   }
 
-  public static List<Edge> solve(Graph G, int s) {
+  public static int solve(Graph G, int s) {
     key = new HashMap<>();
     Map<Integer, Integer> parent = new HashMap<>();
     Set<Integer> Q = new HashSet<>(); // contains all the nodes not in the MST
@@ -57,13 +57,22 @@ public class Prim {
       }
     }
 
+    int totalCost = 0;
+    for (Integer node : key.keySet()) {
+      if (node != s)
+        totalCost += key.get(node);
+    }
+    return totalCost;
+
+    /*
     List<Edge> A = new LinkedList<>(); // minimum spanning tree
     for (Integer node : key.keySet()) {
       if (node != s)
         A.add(new Edge(node, parent.get(node), key.get(node)));
     }
-
     return A;
+
+     */
   }
 
   // dumb implementation
