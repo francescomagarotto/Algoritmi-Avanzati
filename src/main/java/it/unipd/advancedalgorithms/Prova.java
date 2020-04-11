@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -19,9 +18,6 @@ import it.unipd.advancedalgorithms.algorithms.*;
 
 public class Prova {
   public static void main(final String[] args) throws Exception {
-    //Graph g1 = GraphReader.getGraph("datasets/input_random_3_10.txt");
-    //int prim1 = Prim.solve(g1, 1);
-
     final List<String[]> kruskalUnionFindTimes = new ArrayList<String[]>();
     final List<String[]> kruskalTimes = new ArrayList<>();
     final List<String[]> primTimes = new ArrayList<>();
@@ -31,30 +27,36 @@ public class Prova {
         final Graph g = GraphReader.getGraph("datasets/" + f);
         Integer numberVertex = g.getnVertex();
 
-        //Benchmark Prim
+        // Benchmark Prim
         Long time = System.nanoTime();
         int prim = Prim.solve(g, 1);
-        Long temp = (System.nanoTime() - time)/1000000;
-        primTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
+        Long temp = (System.nanoTime() - time) / 1000000;
+        primTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
 
-        //Benchmark Kruskal
+        // Benchmark Kruskal
         time = System.nanoTime();
         int kruskal = Kruskal.MST(g);
-        temp = (System.nanoTime() - time)/1000000;
-        kruskalTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
+        temp = (System.nanoTime() - time) / 1000000;
+        kruskalTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
 
-        //Benchmark Kruskal with UnionFind
+        // Benchmark Kruskal with UnionFind
         time = System.nanoTime();
         int kruskalUF = KruskalUnionFind.KruskalMST(g);
-        temp = (System.nanoTime() - time)/1000000;
-        kruskalUnionFindTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
+        temp = (System.nanoTime() - time) / 1000000;
+        kruskalUnionFindTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
+        Path path = Paths.get("DatasetsOutput/" + file.getFileName().toString().replace("input", "output"));
+        int outputres = 0;
+        try {
+          outputres = Integer.parseInt(Files.lines(path).iterator().next());// print each line
+        } catch (IOException ex) {
+          ex.printStackTrace();// handle exception here
+        }
+        System.out.println("prim output: " + prim);
+        System.out.println("kruskal output: " + kruskal);
+        System.out.println("kruskal union find output: " + kruskalUF);
+        System.out.println("real output: " + outputres);
+        System.out.println("");
 
-        if (prim != kruskal) {
-          System.out.println("Errore:  prim:"+prim+" kruskal:"+ kruskal +"; FILE:"+f);
-        }
-        else {
-          System.out.println("FILE: "+f+" completato");
-        }
       });
     } catch (final Exception e) {
     }
@@ -67,10 +69,10 @@ public class Prova {
   private static void printFile(final String filename, final List<String[]> entries) throws IOException {
     Files.deleteIfExists(Paths.get(filename));
     try (FileOutputStream fos = new FileOutputStream(filename);
-                OutputStreamWriter osw = new OutputStreamWriter(fos, 
-                        StandardCharsets.UTF_8);
-                CSVWriter writer = new CSVWriter(osw, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
-            writer.writeAll(entries);
-        }
+        OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+        CSVWriter writer = new CSVWriter(osw, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
+            CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
+      writer.writeAll(entries);
+    }
   }
 }
