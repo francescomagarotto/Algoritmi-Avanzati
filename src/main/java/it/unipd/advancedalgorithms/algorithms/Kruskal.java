@@ -11,7 +11,7 @@ import it.unipd.advancedalgorithms.graph.Edge;
 import it.unipd.advancedalgorithms.graph.Graph;
 
 public class Kruskal {
-    public static Set<Edge> MST(Graph g) {
+    public static int MST(Graph g) {
         Set<Edge> a = new HashSet<>();
         Set<Integer> cyclic = new HashSet<>();
         List<Edge> orderedList = g.getEdges().stream().sorted(Comparator.comparingInt(Edge::getWeight))
@@ -25,7 +25,11 @@ public class Kruskal {
                 cyclic.add(e.getEnd());
             }
         }
-        return a;
+        int result = 0;
+        for (Edge e : a) {
+          result += e.getWeight();
+        }
+        return result;
     }
 
 }

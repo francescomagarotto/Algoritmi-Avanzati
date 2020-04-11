@@ -39,7 +39,7 @@ public class Prova {
 
         //Benchmark Kruskal
         time = System.nanoTime();
-        Kruskal.MST(g);
+        int kruskal = Kruskal.MST(g);
         temp = (System.nanoTime() - time)/1000000;
         kruskalTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
 
@@ -49,8 +49,8 @@ public class Prova {
         temp = (System.nanoTime() - time)/1000000;
         kruskalUnionFindTimes.add(new String[] {f, numberVertex.toString(), temp.toString()});
 
-        if (prim != kruskalUF) {
-          System.out.println("Errore:  prim:"+prim+" kruskal:"+kruskalUF +"; FILE:"+f);
+        if (prim != kruskal) {
+          System.out.println("Errore:  prim:"+prim+" kruskal:"+ kruskal +"; FILE:"+f);
         }
         else {
           System.out.println("FILE: "+f+" completato");
