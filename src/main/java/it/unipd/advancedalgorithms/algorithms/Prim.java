@@ -62,17 +62,17 @@ public class Prim {
       if (node != s)
         totalCost += key.get(node);
     }
-    return totalCost;
 
-    /*
+
+
     List<Edge> A = new LinkedList<>(); // minimum spanning tree
     for (Integer node : key.keySet()) {
       if (node != s)
         A.add(new Edge(node, parent.get(node), key.get(node)));
     }
-    return A;
+    //return A;
 
-     */
+    return totalCost;
   }
 
   // dumb implementation

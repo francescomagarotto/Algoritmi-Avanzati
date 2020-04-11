@@ -19,6 +19,9 @@ import it.unipd.advancedalgorithms.algorithms.*;
 
 public class Prova {
   public static void main(final String[] args) throws Exception {
+    //Graph g1 = GraphReader.getGraph("datasets/input_random_3_10.txt");
+    //int prim1 = Prim.solve(g1, 1);
+
     final List<String[]> kruskalUnionFindTimes = new ArrayList<String[]>();
     final List<String[]> kruskalTimes = new ArrayList<>();
     final List<String[]> primTimes = new ArrayList<>();
@@ -48,6 +51,9 @@ public class Prova {
 
         if (prim != kruskalUF) {
           System.out.println("Errore:  prim:"+prim+" kruskal:"+kruskalUF +"; FILE:"+f);
+        }
+        else {
+          System.out.println("FILE: "+f+" completato");
         }
       });
     } catch (final Exception e) {

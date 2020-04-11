@@ -30,7 +30,7 @@ public class GraphReader {
           map.put(src, xe);
         }
         if (map.containsKey(dest)) {
-          map.get(dest).add(e);
+          map.get(dest).add(new Edge(dest, src, weight));
         } else {
           LinkedList<Edge> xe = new LinkedList<Edge>();
           xe.add(new Edge(dest, src, weight));
