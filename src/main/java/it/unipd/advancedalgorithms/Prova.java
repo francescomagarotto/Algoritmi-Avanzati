@@ -59,6 +59,7 @@ public class Prova {
 
       });
     } catch (final Exception e) {
+      e.printStackTrace();
     }
 
     printFile("kruskal.csv", kruskalTimes);
