@@ -54,7 +54,11 @@ public class GraphReader {
           if (!trovato) 
             map.get(src).add(new Edge(dest, src, weight));
         }
-
+        else {
+          LinkedList<Edge> r = new LinkedList<Edge>();
+          r.add(e);
+          map.put(dest, r);
+        }
         for (Edge e1 : edgeList) {
           if (e1.getEnd() == dest && e1.getStart() == src) {
             if (weight > e1.getWeight())
