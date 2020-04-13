@@ -4,6 +4,7 @@ import java.nio.file.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,13 +24,24 @@ public class GraphReader {
         Edge e = new Edge(src, dest, weight);
 
         if (map.containsKey(src)) {
-          map.get(src).add(e);
+          Optional<Edge> oE = map.get(src).stream().filter(p -> p.getEnd() == dest).findAny();
+          if(oE.isPresent() && oE.get().getWeight() > weight) {
+            oE.get().setWeight(weight);
+          } else {
+            map.get(src).add(e); 
+          }
         } else {
           LinkedList<Edge> xe = new LinkedList<Edge>();
           xe.add(e);
           map.put(src, xe);
         }
         if (map.containsKey(dest)) {
+          Optional<Edge> check = map.get(dest).stream().filter(p -> p.getEnd() == src).findAny();
+          if(check.isPresent() && check.get().getWeight() > weight) {
+            check.get().setWeight(weight);
+          } else {
+            map.get(src).add(e); 
+          }
           map.get(dest).add(new Edge(dest, src, weight));
         } else {
           LinkedList<Edge> xe = new LinkedList<Edge>();
