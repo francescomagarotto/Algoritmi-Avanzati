@@ -25,8 +25,9 @@ public class GraphReader {
 
         if (map.containsKey(src)) {
           Optional<Edge> oE = map.get(src).stream().filter(p -> p.getEnd() == dest).findAny();
-          if(oE.isPresent() && oE.get().getWeight() > weight) {
-            oE.get().setWeight(weight);
+          if(oE.isPresent()) {
+            if(oE.get().getWeight() > weight)
+              oE.get().setWeight(weight);
           } else {
             map.get(src).add(e); 
           }
@@ -37,12 +38,12 @@ public class GraphReader {
         }
         if (map.containsKey(dest)) {
           Optional<Edge> check = map.get(dest).stream().filter(p -> p.getEnd() == src).findAny();
-          if(check.isPresent() && check.get().getWeight() > weight) {
-            check.get().setWeight(weight);
+          if(check.isPresent()) {
+            if(check.get().getWeight() > weight)
+              check.get().setWeight(weight);
           } else {
-            map.get(src).add(e); 
+            map.get(dest).add(new Edge(dest, src, weight)); 
           }
-          map.get(dest).add(new Edge(dest, src, weight));
         } else {
           LinkedList<Edge> xe = new LinkedList<Edge>();
           xe.add(new Edge(dest, src, weight));
