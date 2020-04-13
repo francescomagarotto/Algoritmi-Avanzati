@@ -24,32 +24,45 @@ public class GraphReader {
         Edge e = new Edge(src, dest, weight);
 
         if (map.containsKey(src)) {
-          Optional<Edge> oE = map.get(src).stream().filter(p -> p.getEnd() == dest).findAny();
-          if(oE.isPresent()) {
-            if(oE.get().getWeight() > weight)
-              oE.get().setWeight(weight);
-          } else {
-            map.get(src).add(e); 
+          boolean trovato = false;
+          for (Edge e1 : map.get(src)) {
+            if (e1.getEnd() == dest) {
+              if (e1.getWeight() > weight)
+                e1.setWeight(weight);
+              trovato = true;
+              break;
+            }
           }
+          if (!trovato) 
+            map.get(src).add(e);
+          
         } else {
-          LinkedList<Edge> xe = new LinkedList<Edge>();
-          xe.add(e);
-          map.put(src, xe);
+          LinkedList<Edge> r = new LinkedList<Edge>();
+          r.add(e);
+          map.put(src, r);
         }
         if (map.containsKey(dest)) {
-          Optional<Edge> check = map.get(dest).stream().filter(p -> p.getEnd() == src).findAny();
-          if(check.isPresent()) {
-            if(check.get().getWeight() > weight)
-              check.get().setWeight(weight);
-          } else {
-            map.get(dest).add(new Edge(dest, src, weight)); 
+          boolean trovato = false;
+          for (Edge e1 : map.get(dest)) {
+            if (e1.getEnd() == dest) {
+              if (e1.getWeight() > weight)
+                e1.setWeight(weight);
+              trovato = true;
+              break;
+            }
           }
-        } else {
-          LinkedList<Edge> xe = new LinkedList<Edge>();
-          xe.add(new Edge(dest, src, weight));
-          map.put(dest, xe);
+          if (!trovato) 
+            map.get(src).add(new Edge(dest, src, weight));
         }
-        edgeList.add(e);
+
+        for (Edge e1 : edgeList) {
+          if (e1.getEnd() == dest && e1.getStart() == src) {
+            if (weight > e1.getWeight())
+              e1.setWeight(weight);
+            else
+              edgeList.add(e);
+          }
+        }
       }
       return new Graph(edgeList, map);
 
