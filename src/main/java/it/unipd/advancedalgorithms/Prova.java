@@ -27,7 +27,7 @@ public class Prova {
         final Graph g = GraphReader.getGraph("datasets/" + f);
         Integer numberVertex = g.getnVertex();
 
-        // Benchmark Prim
+        //Benchmark Prim
         Long time = System.nanoTime();
         int prim = Prim.solve(g, 1);
         Long temp = (System.nanoTime() - time) / 1000000;
@@ -51,29 +51,40 @@ public class Prova {
         } catch (IOException ex) {
           ex.printStackTrace();// handle exception here
         }
-        System.out.println("prim output: " + prim);
-        System.out.println("kruskal output: " + kruskal);
-        System.out.println("kruskal union find output: " + kruskalUF);
-        System.out.println("real output: " + outputres);
-        System.out.println("");
+        System.out.println("\n----------------------------------");
+        System.out.println((kruskal == prim && prim == kruskalUF && kruskalUF == outputres) ? "OK" : "ERROR");
+        System.out.println(f);
+        System.out.println("Prim: " + kruskalUF);
+        System.out.println("Kruskal: " + kruskal);
+        System.out.println("Kruskal Union-Find: " + kruskalUF);
+        System.out.println("Real output: " + outputres);
+        System.out.println("----------------------------------");
 
       });
     } catch (final Exception e) {
       e.printStackTrace();
     }
-
-    printFile("kruskal.csv", kruskalTimes);
-    printFile("prim.csv", primTimes);
-    printFile("unionkruskal.csv", kruskalUnionFindTimes);
+    /*new Thread(() -> {
+      printFile("kruskal.csv", kruskalTimes);
+    }).start();
+    new Thread(() -> {
+      printFile("prim.csv", primTimes);
+    }).start();
+    new Thread(() -> {
+      printFile("unionkruskal.csv", kruskalUnionFindTimes);
+    }).start();   */
   }
 
-  private static void printFile(final String filename, final List<String[]> entries) throws IOException {
-    Files.deleteIfExists(Paths.get(filename));
+  private static void printFile(final String filename, final List<String[]> entries){
+    try {
+      Files.deleteIfExists(Paths.get(filename));
+    } catch (Exception e) {}
     try (FileOutputStream fos = new FileOutputStream(filename);
         OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
         CSVWriter writer = new CSVWriter(osw, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
             CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
       writer.writeAll(entries);
     }
+    catch(IOException e) {}
   }
 }

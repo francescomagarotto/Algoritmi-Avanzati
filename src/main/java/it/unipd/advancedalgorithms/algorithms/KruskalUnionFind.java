@@ -64,7 +64,7 @@ public class KruskalUnionFind {
 
     Iterator<Edge> edgesIterator = g.getEdges().iterator();
     while (e < g.getnVertex() - 1) {
-      Edge next_edge = edgesIterator.next(); // pick smalleste edge
+      Edge next_edge = edgesIterator.next(); // pick smallest edge
       int x = find(subsets, next_edge.getStart() - 1);
       int y = find(subsets, next_edge.getEnd() - 1);
       if (x != y) {
@@ -72,6 +72,7 @@ public class KruskalUnionFind {
         Union(subsets, x, y);
       }
     }
+    
     int sum = 0;
     for (int i = 0; i < e; ++i) {
       sum += result[i].getWeight();

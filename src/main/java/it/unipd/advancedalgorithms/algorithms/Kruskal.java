@@ -27,13 +27,7 @@ public class Kruskal {
                 res.add(e);
             }
         }
-
-        int result = 0;
-
-        for (Edge edge : res)
-            result += edge.getWeight();
-
-        return result;
+        return res.stream().map(Edge::getWeight).reduce(0, Integer::sum);
     }
 
     public static Boolean findPath(int s, int e, Graph graph) {
@@ -50,7 +44,6 @@ public class Kruskal {
 
         while (stack.size() != 0) {
             int current = stack.poll();
-
             Iterator<Edge> itr = graph.getAdjacencyLists().get(current).iterator();
             while (itr.hasNext()) {
                 int v = itr.next().getEnd();
