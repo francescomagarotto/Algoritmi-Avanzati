@@ -64,7 +64,7 @@ public class Prova {
     } catch (final Exception e) {
       e.printStackTrace();
     }
-    /*new Thread(() -> {
+    new Thread(() -> {
       printFile("kruskal.csv", kruskalTimes);
     }).start();
     new Thread(() -> {
@@ -72,7 +72,7 @@ public class Prova {
     }).start();
     new Thread(() -> {
       printFile("unionkruskal.csv", kruskalUnionFindTimes);
-    }).start();   */
+    }).start();   
   }
 
   private static void printFile(final String filename, final List<String[]> entries){
