@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
 import com.opencsv.CSVWriter;
@@ -17,31 +19,84 @@ import it.unipd.advancedalgorithms.graph.*;
 import it.unipd.advancedalgorithms.algorithms.*;
 
 public class Prova {
-  public static void main(final String[] args) throws Exception {
+  public static void main(final String[] args) throws Exception, InterruptedException, ExecutionException {
     final List<String[]> kruskalUnionFindTimes = new ArrayList<String[]>();
     final List<String[]> kruskalTimes = new ArrayList<>();
     final List<String[]> primTimes = new ArrayList<>();
+    /*
+     * Graph g = GraphReader.getGraph("datasets/prova.txt");
+     * System.out.println("Kruskal: " + Kruskal.MST(g));
+     */
     try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
       paths.filter(Files::isRegularFile).forEach(file -> {
         String f = file.getFileName().toString();
         final Graph g = GraphReader.getGraph("datasets/" + f);
         Integer numberVertex = g.getnVertex();
+        CompletableFuture<Integer> completableFuturePrim = new CompletableFuture<>();
+        CompletableFuture<Integer> completableFutureKruskal = new CompletableFuture<>();
+        CompletableFuture<Integer> completableFutureKruskalUnionFind = new CompletableFuture<>();
 
-        //Benchmark Prim
+        new Thread(new Runnable() {
+          @Override
+          public void run() {
+            // computation, reading input streams, etc
+            Integer result = Prim.solve(g, 1);
+            completableFuturePrim.complete(result);
+          }
+        }).start();
+
+        new Thread(new Runnable() {
+          @Override
+          public void run() {
+            // computation, reading input streams, etc
+            Integer result = Kruskal.MST(g);
+            completableFutureKruskal.complete(result);
+          }
+        }).start();
+
+        new Thread(new Runnable() {
+          @Override
+          public void run() {
+            // computation, reading input streams, etc
+            Integer result = KruskalUnionFind.KruskalMST(g);
+            completableFutureKruskalUnionFind.complete(result);
+          }
+        }).start();
+
+        // Benchmark Prim
         Long time = System.nanoTime();
-        int prim = Prim.solve(g, 1);
+        Integer prim = 0;
+        try {
+          prim = completableFuturePrim.get();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        } catch (ExecutionException e) {
+          e.printStackTrace();
+        }
         Long temp = (System.nanoTime() - time) / 1000000;
         primTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
 
         // Benchmark Kruskal
         time = System.nanoTime();
-        int kruskal = Kruskal.MST(g);
+        Integer kruskal = 0;
+        try {
+          kruskal = completableFutureKruskal.get();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        } catch (ExecutionException e) {
+          e.printStackTrace();
+        }
         temp = (System.nanoTime() - time) / 1000000;
         kruskalTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
 
         // Benchmark Kruskal with UnionFind
         time = System.nanoTime();
-        int kruskalUF = KruskalUnionFind.KruskalMST(g);
+        Integer kruskalUF = 0;
+        try {
+          kruskalUF = completableFutureKruskalUnionFind.get();
+        } catch (InterruptedException | ExecutionException e) {
+          e.printStackTrace();
+        }
         temp = (System.nanoTime() - time) / 1000000;
         kruskalUnionFindTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
         Path path = Paths.get("DatasetsOutput/" + file.getFileName().toString().replace("input", "output"));
@@ -63,7 +118,7 @@ public class Prova {
       });
     } catch (final Exception e) {
       e.printStackTrace();
-    }
+    } 
     /*new Thread(() -> {
       printFile("kruskal.csv", kruskalTimes);
     }).start();
