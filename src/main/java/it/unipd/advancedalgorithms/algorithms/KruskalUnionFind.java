@@ -1,13 +1,21 @@
 package it.unipd.advancedalgorithms.algorithms;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
 
 import it.unipd.advancedalgorithms.graph.Edge;
 import it.unipd.advancedalgorithms.graph.Graph;
+import it.unipd.advancedalgorithms.graph.GraphReader;
 
-public class KruskalUnionFind {
+public class KruskalUnionFind implements Runnable {
+  final List<String[]> kruskalTimes = new ArrayList<>();
   static class subset {
     int parent, size;
 
@@ -79,4 +87,20 @@ public class KruskalUnionFind {
     }
     return sum;
   }
+  @Override
+  public void run() {
+      try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
+          paths.filter(Files::isRegularFile).forEach(file -> {
+            String f = file.getFileName().toString();
+            final Graph g = GraphReader.getGraph("datasets/" + f);
+            Long inizio = System.currentTimeMillis();
+            Integer result = KruskalMST(g);
+            Long fine = System.currentTimeMillis() - inizio;
+            kruskalTimes.add(new String[] { f, result.toString(), fine.toString() });
+  });
+  }
+  catch(Exception e) {}
+  GraphReader.printFile("kruskalUnionFind.csv", kruskalTimes);
+}
+  
 }

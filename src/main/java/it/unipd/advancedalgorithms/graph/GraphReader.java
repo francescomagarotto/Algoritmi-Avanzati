@@ -1,9 +1,15 @@
 package it.unipd.advancedalgorithms.graph;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.opencsv.CSVWriter;
 
 import org.javatuples.Pair;
 
@@ -51,5 +57,18 @@ public class GraphReader {
     }
 
     return new Graph();
+  }
+
+  public static void printFile(final String filename, final List<String[]> entries){
+    try {
+      Files.deleteIfExists(Paths.get(filename));
+    } catch (Exception e) {}
+    try (FileOutputStream fos = new FileOutputStream(filename);
+        OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+        CSVWriter writer = new CSVWriter(osw, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
+            CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
+      writer.writeAll(entries);
+    }
+    catch(IOException e) {}
   }
 }

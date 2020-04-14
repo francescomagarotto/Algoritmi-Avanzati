@@ -1,5 +1,8 @@
 package it.unipd.advancedalgorithms.algorithms;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -7,11 +10,15 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import it.unipd.advancedalgorithms.Prova;
 import it.unipd.advancedalgorithms.graph.Edge;
 import it.unipd.advancedalgorithms.graph.Graph;
+import it.unipd.advancedalgorithms.graph.GraphReader;
 
-public class Kruskal {
+public class Kruskal implements Runnable {
+    final List<String[]> kruskalTimes = new ArrayList<>();
     public static int MST(Graph g) {
         Graph copy = new Graph();
         List<Edge> orderedList = g.getEdges().stream().sorted(Comparator.comparingInt(Edge::getWeight))
@@ -58,5 +65,21 @@ public class Kruskal {
         }
         return false;
     }
+
+    @Override
+    public void run() {
+        try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
+            paths.filter(Files::isRegularFile).forEach(file -> {
+              String f = file.getFileName().toString();
+              final Graph g = GraphReader.getGraph("datasets/" + f);
+              Long inizio = System.currentTimeMillis();
+              Integer result = MST(g);
+              Long fine = System.currentTimeMillis() - inizio;
+              kruskalTimes.add(new String[] { f, result.toString(), fine.toString() });
+    });
+    }
+    catch(Exception e) {}
+    GraphReader.printFile("kruskal.csv", kruskalTimes);
+}
 
 }

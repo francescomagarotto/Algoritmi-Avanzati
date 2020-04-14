@@ -1,5 +1,8 @@
 package it.unipd.advancedalgorithms.algorithms;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -8,12 +11,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 import java.util.PriorityQueue;
 import it.unipd.advancedalgorithms.graph.*;
 
-public class Prim {
+public class Prim implements Runnable {
   private static Map<Integer, Integer> key;
-
+  final List<String[]> primTimes = new ArrayList<>();
   // Used in minHeap to sort the nodes by key
   private static class NodeComparator implements Comparator<Integer> {
     @Override
@@ -105,4 +109,20 @@ public class Prim {
 
     return A;
   }
+
+  @Override
+  public void run() {
+    try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
+          paths.filter(Files::isRegularFile).forEach(file -> {
+            String f = file.getFileName().toString();
+            final Graph g = GraphReader.getGraph("datasets/" + f);
+            Long inizio = System.currentTimeMillis();
+            Integer result = solve(g, 1);
+            Long fine = System.currentTimeMillis() - inizio;
+            primTimes.add(new String[] { f, result.toString(), fine.toString() });
+  });
+  }
+  catch(Exception e) {}
+  GraphReader.printFile("prim.csv", primTimes);
+}
 }
