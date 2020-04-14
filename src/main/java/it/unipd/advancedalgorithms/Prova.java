@@ -62,6 +62,7 @@ public class Prova {
         System.out.println("Kruskal Union-Find: " + kruskalUF);
         System.out.println("Real output: " + outputres);
         System.out.println("----------------------------------");
+        counter = counter + 1;
 
       });
     } catch (final Exception e) {
