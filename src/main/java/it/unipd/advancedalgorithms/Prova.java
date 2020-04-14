@@ -1,5 +1,6 @@
 package it.unipd.advancedalgorithms;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -21,6 +22,8 @@ public class Prova {
     final List<String[]> kruskalUnionFindTimes = new ArrayList<String[]>();
     final List<String[]> kruskalTimes = new ArrayList<>();
     final List<String[]> primTimes = new ArrayList<>();
+    int size = new File("datasets").listFiles().length;
+    int counter = 1;
     try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
       paths.filter(Files::isRegularFile).forEach(file -> {
         String f = file.getFileName().toString();
@@ -51,7 +54,7 @@ public class Prova {
         } catch (IOException ex) {
           ex.printStackTrace();// handle exception here
         }
-        System.out.println("\n----------------------------------");
+        System.out.println("\n--------------"+ counter + "/" + size + "----------------");
         System.out.println((kruskal == prim && prim == kruskalUF && kruskalUF == outputres) ? "OK" : "ERROR");
         System.out.println(f);
         System.out.println("Prim: " + kruskalUF);
