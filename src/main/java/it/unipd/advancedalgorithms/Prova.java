@@ -107,7 +107,6 @@ public class Prova {
           ex.printStackTrace();// handle exception here
         }
         System.out.println("\n----------------------------------");
-        System.out.println((kruskal == prim && prim == kruskalUF && kruskalUF == outputres) ? "OK" : "ERROR");
         System.out.println(f);
         System.out.println("Prim: " + kruskalUF);
         System.out.println("Kruskal: " + kruskal);
@@ -119,7 +118,7 @@ public class Prova {
     } catch (final Exception e) {
       e.printStackTrace();
     } 
-    /*new Thread(() -> {
+    new Thread(() -> {
       printFile("kruskal.csv", kruskalTimes);
     }).start();
     new Thread(() -> {
@@ -127,7 +126,7 @@ public class Prova {
     }).start();
     new Thread(() -> {
       printFile("unionkruskal.csv", kruskalUnionFindTimes);
-    }).start();   */
+    }).start();   
   }
 
   private static void printFile(final String filename, final List<String[]> entries){
