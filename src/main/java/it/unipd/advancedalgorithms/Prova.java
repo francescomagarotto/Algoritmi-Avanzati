@@ -56,9 +56,9 @@ public class Prova {
           ex.printStackTrace();// handle exception here
         }
         System.out.println("\n--------------"+ counter.getAndIncrement() + "/" + size + "----------------");
-        System.out.println((kruskal == prim && prim == kruskalUF && kruskalUF == outputres) ? "OK" : "ERROR");
+        System.out.println((kruskal == prim && prim == kruskalUF && kruskalUF == outputres) ? "\u2705" : "ERROR");
         System.out.println(f);
-        System.out.println("Prim: " + kruskalUF);
+        System.out.println("Prim: " + prim);
         System.out.println("Kruskal: " + kruskal);
         System.out.println("Kruskal Union-Find: " + kruskalUF);
         System.out.println("Real output: " + outputres);
