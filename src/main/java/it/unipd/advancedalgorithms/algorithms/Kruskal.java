@@ -43,7 +43,7 @@ public class Kruskal {
         stack.add(s);
 
         while (stack.size() != 0) {
-            int current = stack.poll();
+            int current = stack.getFirst();
             Iterator<Edge> itr = graph.getAdjacencyLists().get(current).iterator();
             while (itr.hasNext()) {
                 int v = itr.next().getEnd();
@@ -54,6 +54,7 @@ public class Kruskal {
                     visited.put(v, true);
                 }
             }
+            stack.poll();
         }
         return false;
     }

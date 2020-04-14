@@ -13,7 +13,7 @@ public class Graph {
     edges = edgeList;
     adjacencyLists = adjList;
   }
-
+  
   // add weighted edge from source to destination
   public void addEdge(int src, int dest, int weight) {
     if (adjacencyLists.containsKey(src))
@@ -31,6 +31,7 @@ public class Graph {
       adjacencyLists.put(dest, l);
     }
   }
+
 
   public Graph() {
     edges = new ArrayList<>();
