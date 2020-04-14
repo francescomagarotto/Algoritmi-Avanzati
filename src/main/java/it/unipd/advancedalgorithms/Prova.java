@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import com.opencsv.CSVWriter;
@@ -23,7 +24,7 @@ public class Prova {
     final List<String[]> kruskalTimes = new ArrayList<>();
     final List<String[]> primTimes = new ArrayList<>();
     int size = new File("datasets").listFiles().length;
-    int counter = 1;
+    AtomicInteger counter = new AtomicInteger(0);
     try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
       paths.filter(Files::isRegularFile).forEach(file -> {
         String f = file.getFileName().toString();
@@ -54,7 +55,7 @@ public class Prova {
         } catch (IOException ex) {
           ex.printStackTrace();// handle exception here
         }
-        System.out.println("\n--------------"+ counter + "/" + size + "----------------");
+        System.out.println("\n--------------"+ counter.getAndIncrement() + "/" + size + "----------------");
         System.out.println((kruskal == prim && prim == kruskalUF && kruskalUF == outputres) ? "OK" : "ERROR");
         System.out.println(f);
         System.out.println("Prim: " + kruskalUF);
@@ -62,7 +63,6 @@ public class Prova {
         System.out.println("Kruskal Union-Find: " + kruskalUF);
         System.out.println("Real output: " + outputres);
         System.out.println("----------------------------------");
-        counter = counter + 1;
 
       });
     } catch (final Exception e) {
