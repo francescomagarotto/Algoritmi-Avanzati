@@ -24,7 +24,7 @@ public class Prova {
     final List<String[]> kruskalTimes = new ArrayList<>();
     final List<String[]> primTimes = new ArrayList<>();
     int size = new File("datasets").listFiles().length;
-    AtomicInteger counter = new AtomicInteger(0);
+    AtomicInteger counter = new AtomicInteger(1);
     try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
       paths.filter(Files::isRegularFile).forEach(file -> {
         String f = file.getFileName().toString();
@@ -32,21 +32,21 @@ public class Prova {
         Integer numberVertex = g.getnVertex();
 
         //Benchmark Prim
-        Long time = System.nanoTime();
+        Long time = System.currentTimeMillis();
         int prim = Prim.solve(g, 1);
-        Long temp = (System.nanoTime() - time) / 1000000;
+        Long temp = (System.currentTimeMillis() - time);
         primTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
 
         // Benchmark Kruskal
-        time = System.nanoTime();
+        time = System.currentTimeMillis();
         int kruskal = Kruskal.MST(g);
-        temp = (System.nanoTime() - time) / 1000000;
+        temp = (System.currentTimeMillis() - time);
         kruskalTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
 
         // Benchmark Kruskal with UnionFind
-        time = System.nanoTime();
+        time = System.currentTimeMillis();
         int kruskalUF = KruskalUnionFind.KruskalMST(g);
-        temp = (System.nanoTime() - time) / 1000000;
+        temp = (System.currentTimeMillis() - time);
         kruskalUnionFindTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
         Path path = Paths.get("DatasetsOutput/" + file.getFileName().toString().replace("input", "output"));
         int outputres = 0;
