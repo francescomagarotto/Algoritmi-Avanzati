@@ -28,7 +28,7 @@ public class Prim {
     key = new HashMap<>();
     Map<Integer, Integer> parent = new HashMap<>();
     Set<Integer> Q = new HashSet<>(); // contains all the nodes not in the MST
-    PriorityQueue<Integer> minHeap = new PriorityQueue<>(new NodeComparator());
+    Heap minHeap = new Heap(G.getnVertex(), new NodeComparator());
 
     // initialize data structures
     for (Integer id : G.getAdjacencyLists().keySet()) {
@@ -51,8 +51,7 @@ public class Prim {
           parent.replace(v, u);
           key.replace(v, edge.getWeight());
           // update the heap
-          minHeap.remove(v);
-          minHeap.add(v);
+          minHeap.update(v);
         }
       }
     }
