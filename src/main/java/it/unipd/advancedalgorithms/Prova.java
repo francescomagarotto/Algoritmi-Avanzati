@@ -20,34 +20,21 @@ import it.unipd.advancedalgorithms.algorithms.*;
 
 public class Prova {
   public static void main(final String[] args) throws Exception {
-    final List<String[]> kruskalUnionFindTimes = new ArrayList<String[]>();
     final List<String[]> kruskalTimes = new ArrayList<>();
-    final List<String[]> primTimes = new ArrayList<>();
     int size = new File("datasets").listFiles().length;
-    AtomicInteger counter = new AtomicInteger(0);
+    AtomicInteger counter = new AtomicInteger(1);
     try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
       paths.filter(Files::isRegularFile).forEach(file -> {
         String f = file.getFileName().toString();
+        Long init = System.currentTimeMillis();
         final Graph g = GraphReader.getGraph("datasets/" + f);
+        System.out.print("Tempo per realizzare il grafo: " + (System.currentTimeMillis() - init));
         Integer numberVertex = g.getnVertex();
-
-        //Benchmark Prim
-        Long time = System.nanoTime();
-        int prim = Prim.solve(g, 1);
-        Long temp = (System.nanoTime() - time) / 1000000;
-        primTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
-
         // Benchmark Kruskal
-        time = System.nanoTime();
+        Long time = System.currentTimeMillis();
         int kruskal = Kruskal.MST(g);
-        temp = (System.nanoTime() - time) / 1000000;
+        Long temp = System.currentTimeMillis() - time;
         kruskalTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
-
-        // Benchmark Kruskal with UnionFind
-        time = System.nanoTime();
-        int kruskalUF = KruskalUnionFind.KruskalMST(g);
-        temp = (System.nanoTime() - time) / 1000000;
-        kruskalUnionFindTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
         Path path = Paths.get("DatasetsOutput/" + file.getFileName().toString().replace("input", "output"));
         int outputres = 0;
         try {
@@ -56,11 +43,9 @@ public class Prova {
           ex.printStackTrace();// handle exception here
         }
         System.out.println("\n--------------"+ counter.getAndIncrement() + "/" + size + "----------------");
-        System.out.println((kruskal == prim && prim == kruskalUF && kruskalUF == outputres) ? "\u2705" : "ERROR");
+        System.out.println((kruskal == outputres) ? "\u2705" : "ERROR");
         System.out.println(f);
-        System.out.println("Prim: " + prim);
         System.out.println("Kruskal: " + kruskal);
-        System.out.println("Kruskal Union-Find: " + kruskalUF);
         System.out.println("Real output: " + outputres);
         System.out.println("----------------------------------");
 
@@ -68,15 +53,7 @@ public class Prova {
     } catch (final Exception e) {
       e.printStackTrace();
     }
-    new Thread(() -> {
-      printFile("kruskal.csv", kruskalTimes);
-    }).start();
-    new Thread(() -> {
-      printFile("prim.csv", primTimes);
-    }).start();
-    new Thread(() -> {
-      printFile("unionkruskal.csv", kruskalUnionFindTimes);
-    }).start();   
+    printFile("kruskal.csv", kruskalTimes);
   }
 
   private static void printFile(final String filename, final List<String[]> entries){
