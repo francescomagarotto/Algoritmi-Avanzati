@@ -1,0 +1,38 @@
+\documentclass[a4paper]{article}
+\usepackage[italian]{babel}
+\usepackage[left=1cm, right=1cm]{geometry}
+\usepackage{csvsimple}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{tabularx}
+%opening
+\title{Relazione laboratorio Algoritmi Avanzati}
+\author{Magarotto Francesco\\Muraro Enrico\\Piva Giulio}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Prim}
+\begin{multicols}{2}
+\begin{table}[H]
+	\centering
+\csvreader[head to column names,tabular=|l|l|l|l|,
+table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)\\\hline,
+table foot=\hline]{prim.csv}{}{%
+	\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo}%
+	{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo}}
+\end{table}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+	\begin{axis}
+	\addplot table [x=nodi, y=tempo, col sep=comma] {prim.csv};
+	\end{axis}
+	\end{tikzpicture}
+\end{figure}
+\end{multicols}
+\end{document}

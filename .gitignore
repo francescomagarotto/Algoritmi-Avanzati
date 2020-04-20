@@ -4,4 +4,6 @@ target/
 
 Advanced-Algorithms\.iml
 
-*.csv
+*.log
+*.aux
+Relazione/main.synctex.gz
