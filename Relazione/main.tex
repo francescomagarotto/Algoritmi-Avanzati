@@ -1,12 +1,14 @@
 \documentclass[a4paper]{article}
 \usepackage[italian]{babel}
-\usepackage[left=1cm, right=1cm]{geometry}
+\usepackage[left=1cm, right=1cm, bottom=2cm, top=2cm]{geometry}
 \usepackage{csvsimple}
 \usepackage[utf8]{inputenc}
 \usepackage{float}
 \usepackage{pgfplots}
+\pgfplotsset{compat=newest}
 \usepackage{multicol}
 \usepackage{tabularx}
+\usepackage{xcolor}
 %opening
 \title{Relazione laboratorio Algoritmi Avanzati}
 \author{Magarotto Francesco\\Muraro Enrico\\Piva Giulio}
@@ -16,23 +18,73 @@
 \maketitle
 
 
-\section{Prim}
+\section{Kruskal}
 \begin{multicols}{2}
 \begin{table}[H]
 	\centering
 \csvreader[head to column names,tabular=|l|l|l|l|,
 table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)\\\hline,
-table foot=\hline]{prim.csv}{}{%
+table foot=\hline]{kruskal.csv}{}{%
 	\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo}%
 	{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo}}
 \end{table}
 \begin{figure}[H]
 	\centering
 	\begin{tikzpicture}
-	\begin{axis}
-	\addplot table [x=nodi, y=tempo, col sep=comma] {prim.csv};
+	\begin{axis}[xlabel=Numero nodi, ylabel=Tempo (ms)]
+	\addplot table [x=nodi, y=tempo, col sep=comma] {kruskal.csv};
 	\end{axis}
 	\end{tikzpicture}
 \end{figure}
 \end{multicols}
+\newpage
+\section{Kruskal con Union-Find}
+\begin{multicols}{2}
+	\begin{table}[H]
+		\centering
+		\csvreader[head to column names,tabular=|l|l|l|l|,
+		table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)\\\hline,
+		table foot=\hline]{kruskaluf.csv}{}{%
+			\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo}%
+			{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo}}
+	\end{table}
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[xlabel=Numero nodi, ylabel=Tempo (ms)]
+		\addplot table [x=nodi, y=tempo, col sep=comma] {kruskaluf.csv};
+		\end{axis}
+		\end{tikzpicture}
+	\end{figure}
+\end{multicols}
+\newpage
+\section{Prim}
+\begin{multicols}{2}
+	\begin{table}[H]
+		\centering
+		\csvreader[head to column names,tabular=|l|l|l|l|,
+		table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)\\\hline,
+		table foot=\hline]{prim.csv}{}{%
+			\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo}%
+			{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo}}
+	\end{table}
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}[xlabel=Numero nodi, ylabel=Tempo (ms)]
+		\addplot table [x=nodi, y=tempo, col sep=comma] {prim.csv};
+		\end{axis}
+		\end{tikzpicture}
+	\end{figure}
+\end{multicols}
+	\begin{figure}[H]
+	\centering
+\begin{tikzpicture}
+\begin{axis}
+\addplot[ybar,fill] table [x=nodi, y=tempo, col sep=comma] {prim.csv};
+\addplot[ybar, green, fill] table [x=nodi, y=tempo, col sep=comma] {kruskal.csv};
+\addplot[ybar, red, fill] table [x=nodi, y=tempo, col sep=comma] {kruskaluf.csv};
+\end{axis}
+\end{tikzpicture}
+\end{figure}     
 \end{document}
