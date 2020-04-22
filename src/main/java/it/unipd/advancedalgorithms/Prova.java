@@ -25,43 +25,36 @@ public class Prova {
     final List<String[]> primTimes = new ArrayList<>();
     int size = new File("datasets").listFiles().length;
     AtomicInteger counter = new AtomicInteger(1);
-    try (Stream<Path> paths = Files.walk(Paths.get("datasets"))) {
+    try (Stream<Path> paths = Files.walk(Paths.get("mst_dataset"))) {
       paths.filter(Files::isRegularFile).forEach(file -> {
         String f = file.getFileName().toString();
-        final Graph g = GraphReader.getGraph("datasets/" + f);
+        final Graph g = GraphReader.getGraph("mst_dataset/" + f);
         Integer numberVertex = g.getnVertex();
 
-        //Benchmark Prim
+        // Benchmark Prim
         Long time = System.currentTimeMillis();
         Integer prim = Prim.solve(g, 1);
         Long temp = (System.currentTimeMillis() - time);
-        primTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), prim.toString()});
+        primTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), prim.toString() });
 
         // Benchmark Kruskal
         time = System.currentTimeMillis();
         Integer kruskal = Kruskal.MST(g);
         temp = (System.currentTimeMillis() - time);
-        kruskalTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), kruskal.toString()});
+        kruskalTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), kruskal.toString() });
 
         // Benchmark Kruskal with UnionFind
         time = System.currentTimeMillis();
         Integer kruskalUF = KruskalUnionFind.KruskalMST(g);
         temp = (System.currentTimeMillis() - time);
-        kruskalUnionFindTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), kruskalUF.toString()});
-        Path path = Paths.get("DatasetsOutput/" + file.getFileName().toString().replace("input", "output"));
-        int outputres = 0;
-        try {
-          outputres = Integer.parseInt(Files.lines(path).iterator().next());// print each line
-        } catch (IOException ex) {
-          ex.printStackTrace();// handle exception here
-        }
-        System.out.println("\n--------------"+ counter.getAndIncrement() + "/" + size + "----------------");
-        System.out.println((kruskal == prim && prim == kruskalUF && kruskalUF == outputres) ? "\u2705" : "ERROR");
+        kruskalUnionFindTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), kruskalUF.toString() });
+
+        System.out.println("\n--------------" + counter.getAndIncrement() + "/" + size + "----------------");
+        System.out.println((kruskal == prim && prim == kruskalUF) ? "\u2705" : "ERROR");
         System.out.println(f);
         System.out.println("Prim: " + prim);
         System.out.println("Kruskal: " + kruskal);
         System.out.println("Kruskal Union-Find: " + kruskalUF);
-        System.out.println("Real output: " + outputres);
         System.out.println("----------------------------------");
 
       });
@@ -76,19 +69,20 @@ public class Prova {
     }).start();
     new Thread(() -> {
       printFile("unionkruskal.csv", kruskalUnionFindTimes);
-    }).start();   
+    }).start();
   }
 
-  private static void printFile(final String filename, final List<String[]> entries){
+  private static void printFile(final String filename, final List<String[]> entries) {
     try {
       Files.deleteIfExists(Paths.get(filename));
-    } catch (Exception e) {}
+    } catch (Exception e) {
+    }
     try (FileOutputStream fos = new FileOutputStream(filename);
         OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
         CSVWriter writer = new CSVWriter(osw, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
             CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
       writer.writeAll(entries);
+    } catch (IOException e) {
     }
-    catch(IOException e) {}
   }
 }
