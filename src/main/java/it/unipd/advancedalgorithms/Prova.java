@@ -33,21 +33,21 @@ public class Prova {
 
         //Benchmark Prim
         Long time = System.currentTimeMillis();
-        int prim = Prim.solve(g, 1);
+        Integer prim = Prim.solve(g, 1);
         Long temp = (System.currentTimeMillis() - time);
-        primTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
+        primTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), prim.toString()});
 
         // Benchmark Kruskal
         time = System.currentTimeMillis();
-        int kruskal = Kruskal.MST(g);
+        Integer kruskal = Kruskal.MST(g);
         temp = (System.currentTimeMillis() - time);
-        kruskalTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
+        kruskalTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), kruskal.toString()});
 
         // Benchmark Kruskal with UnionFind
         time = System.currentTimeMillis();
-        int kruskalUF = KruskalUnionFind.KruskalMST(g);
+        Integer kruskalUF = KruskalUnionFind.KruskalMST(g);
         temp = (System.currentTimeMillis() - time);
-        kruskalUnionFindTimes.add(new String[] { f, numberVertex.toString(), temp.toString() });
+        kruskalUnionFindTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), kruskalUF.toString()});
         Path path = Paths.get("DatasetsOutput/" + file.getFileName().toString().replace("input", "output"));
         int outputres = 0;
         try {
