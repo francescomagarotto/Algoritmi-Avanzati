@@ -20,71 +20,67 @@
 
 \section{Kruskal}
 \begin{multicols}{2}
-\begin{table}[H]
-	\centering
-\csvreader[head to column names,tabular=|l|l|l|l|,
-table head=\hline\bfseries \# & \bfseries Numero nodi  & \bfseries MST\\\hline,
-table foot=\hline]{kruskal.csv}{}{%
-	\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
-	{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo \bfseries\mst}}
-\end{table}
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}
-	\begin{axis}[xlabel=Numero nodi, ylabel=Tempo (ms)]
-	\addplot table [x=nodi, y=tempo, col sep=comma] {kruskal.csv};
-	\end{axis}
-	\end{tikzpicture}
-\end{figure}
+	\begin{table}[H]
+		\centering
+		\csvreader[head to column names,tabular=|l|l|l|l|,filter expr={test{\ifnumless{\nodi}{8000}}},
+			table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)& \bfseries MST\\\hline,
+			table foot=\hline]{kruskal.csv}{}{%
+			\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
+			{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo & \bfseries\mst}}
+	\end{table}
+	\begin{table}[H]
+		\centering
+		\csvreader[head to column names,tabular=|l|l|l|l|,filter expr={test{\ifnumgreater{\nodi}{4000}}},
+			table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)& \bfseries MST\\\hline,
+			table foot=\hline]{kruskal.csv}{}{%
+			\csvifoddrow{\slshape\the\numexpr44+\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
+			{\bfseries\the\numexpr44+\thecsvrow & \bfseries\nodi & \bfseries\tempo & \bfseries\mst}}
+	\end{table}
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[xlabel=Numero nodi, ylabel=Tempo (ms)]
+				\addplot table [x=nodi, y=tempo, col sep=comma] {kruskal.csv};
+			\end{axis}
+		\end{tikzpicture}
+	\end{figure}
 \end{multicols}
 \newpage
 \section{Kruskal con Union-Find}
 \begin{multicols}{2}
 	\begin{table}[H]
 		\centering
-		\csvreader[head to column names,tabular=|l|l|l|l|,
-		table head=\hline\bfseries \# & \bfseries Numero nodi  & \bfseries MST\\\hline,
-		table foot=\hline]{kruskaluf.csv}{}{%
-		\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
-		{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo \bfseries\mst}}
+		\csvreader[head to column names,tabular=|l|l|l|l|,filter expr={test{\ifnumless{\nodi}{8000}}},
+			table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)& \bfseries MST\\\hline,
+			table foot=\hline]{kruskal.csv}{}{%
+			\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
+			{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo & \bfseries\mst}}
 	\end{table}
-	\begin{figure}[H]
-		\centering
-		\begin{tikzpicture}
-		\begin{axis}[xlabel=Numero nodi, ylabel=Tempo (ms)]
-		\addplot table [x=nodi, y=tempo, col sep=comma] {kruskaluf.csv};
-		\end{axis}
-		\end{tikzpicture}
-	\end{figure}
-\end{multicols}
-\newpage
-\section{Prim}
-\begin{multicols}{2}
 	\begin{table}[H]
 		\centering
-		\csvreader[head to column names,tabular=|l|l|l|l|,
-		table head=\hline\bfseries \# & \bfseries Numero nodi  & \bfseries MST\\\hline,
-		table foot=\hline]{prim.csv}{}{%
-		\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
-		{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo \bfseries\mst}}
+		\csvreader[head to column names,tabular=|l|l|l|l|,filter expr={test{\ifnumgreater{\nodi}{4000}}},
+			table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)& \bfseries MST\\\hline,
+			table foot=\hline]{kruskaluf.csv}{}{%
+			\csvifoddrow{\slshape\the\numexpr44+\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
+			{\bfseries\the\numexpr44+\thecsvrow & \bfseries\nodi & \bfseries\tempo & \bfseries\mst}}
 	\end{table}
 	\begin{figure}[H]
 		\centering
 		\begin{tikzpicture}
-		\begin{axis}[xlabel=Numero nodi, ylabel=Tempo (ms)]
-		\addplot table [x=nodi, y=tempo, col sep=comma] {prim.csv};
-		\end{axis}
+			\begin{axis}[xlabel=Numero nodi, ylabel=Tempo (ms)]
+				\addplot table [x=nodi, y=tempo, col sep=comma] {kruskaluf.csv};
+			\end{axis}
 		\end{tikzpicture}
 	\end{figure}
 \end{multicols}
-	\begin{figure}[H]
+\begin{figure}[H]
 	\centering
-\begin{tikzpicture}
-\begin{axis}
-\addplot[ybar,fill] table [x=nodi, y=tempo, col sep=comma] {prim.csv};
-\addplot[ybar, green, fill] table [x=nodi, y=tempo, col sep=comma] {kruskal.csv};
-\addplot[ybar, red, fill] table [x=nodi, y=tempo, col sep=comma] {kruskaluf.csv};
-\end{axis}
-\end{tikzpicture}
-\end{figure}     
+	\begin{tikzpicture}
+		\begin{axis}
+			\addplot[ybar,fill] table [x=nodi, y=tempo, col sep=comma] {prim.csv};
+			\addplot[ybar, green, fill] table [x=nodi, y=tempo, col sep=comma] {kruskal.csv};
+			\addplot[ybar, red, fill] table [x=nodi, y=tempo, col sep=comma] {kruskaluf.csv};
+		\end{axis}
+	\end{tikzpicture}
+\end{figure}
 \end{document}
