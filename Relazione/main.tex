@@ -23,10 +23,10 @@
 \begin{table}[H]
 	\centering
 \csvreader[head to column names,tabular=|l|l|l|l|,
-table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)\\\hline,
+table head=\hline\bfseries \# & \bfseries Numero nodi  & \bfseries MST\\\hline,
 table foot=\hline]{kruskal.csv}{}{%
-	\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo}%
-	{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo}}
+	\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
+	{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo \bfseries\mst}}
 \end{table}
 \begin{figure}[H]
 	\centering
@@ -43,10 +43,10 @@ table foot=\hline]{kruskal.csv}{}{%
 	\begin{table}[H]
 		\centering
 		\csvreader[head to column names,tabular=|l|l|l|l|,
-		table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)\\\hline,
+		table head=\hline\bfseries \# & \bfseries Numero nodi  & \bfseries MST\\\hline,
 		table foot=\hline]{kruskaluf.csv}{}{%
-			\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo}%
-			{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo}}
+		\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
+		{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo \bfseries\mst}}
 	\end{table}
 	\begin{figure}[H]
 		\centering
@@ -63,10 +63,10 @@ table foot=\hline]{kruskal.csv}{}{%
 	\begin{table}[H]
 		\centering
 		\csvreader[head to column names,tabular=|l|l|l|l|,
-		table head=\hline\bfseries \# & \bfseries Numero nodi & \bfseries Tempo (ms)\\\hline,
+		table head=\hline\bfseries \# & \bfseries Numero nodi  & \bfseries MST\\\hline,
 		table foot=\hline]{prim.csv}{}{%
-			\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo}%
-			{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo}}
+		\csvifoddrow{\slshape\thecsvrow & \slshape\nodi & \slshape\tempo & \slshape\mst}%
+		{\bfseries\thecsvrow & \bfseries\nodi & \bfseries\tempo \bfseries\mst}}
 	\end{table}
 	\begin{figure}[H]
 		\centering

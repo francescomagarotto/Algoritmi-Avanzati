@@ -20,9 +20,13 @@ import it.unipd.advancedalgorithms.algorithms.*;
 
 public class Prova {
   public static void main(final String[] args) throws Exception {
+    String[] header = new String[] {"nodi", "tempo", "mst"};
     final List<String[]> kruskalUnionFindTimes = new ArrayList<String[]>();
     final List<String[]> kruskalTimes = new ArrayList<>();
     final List<String[]> primTimes = new ArrayList<>();
+    kruskalUnionFindTimes.add(header);
+    kruskalTimes.add(header);
+    primTimes.add(header);
     int size = new File("datasets").listFiles().length;
     AtomicInteger counter = new AtomicInteger(1);
     try (Stream<Path> paths = Files.walk(Paths.get("mst_dataset"))) {
@@ -35,22 +39,22 @@ public class Prova {
         Long time = System.currentTimeMillis();
         Integer prim = Prim.solve(g, 1);
         Long temp = (System.currentTimeMillis() - time);
-        primTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), prim.toString() });
+        primTimes.add(new String[] {numberVertex.toString(), temp.toString(), prim.toString() });
 
         // Benchmark Kruskal
         time = System.currentTimeMillis();
         Integer kruskal = Kruskal.MST(g);
         temp = (System.currentTimeMillis() - time);
-        kruskalTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), kruskal.toString() });
+        kruskalTimes.add(new String[] {numberVertex.toString(), temp.toString(), kruskal.toString() });
 
         // Benchmark Kruskal with UnionFind
         time = System.currentTimeMillis();
         Integer kruskalUF = KruskalUnionFind.KruskalMST(g);
         temp = (System.currentTimeMillis() - time);
-        kruskalUnionFindTimes.add(new String[] { f, numberVertex.toString(), temp.toString(), kruskalUF.toString() });
+        kruskalUnionFindTimes.add(new String[] {numberVertex.toString(), temp.toString(), kruskalUF.toString() });
 
         System.out.println("\n--------------" + counter.getAndIncrement() + "/" + size + "----------------");
-        System.out.println((kruskal == prim && prim == kruskalUF) ? "\u2705" : "ERROR");
+        System.out.println((kruskal.equals(prim) && prim.equals(kruskalUF)) ? "\u2705" : "ERROR");
         System.out.println(f);
         System.out.println("Prim: " + prim);
         System.out.println("Kruskal: " + kruskal);
