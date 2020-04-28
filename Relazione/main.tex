@@ -4,6 +4,8 @@
 \usepackage{csvsimple}
 \usepackage[utf8]{inputenc}
 \usepackage{float}
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
 \usepackage{multicol}
@@ -14,9 +16,47 @@
 \author{Magarotto Francesco\\Muraro Enrico\\Piva Giulio}
 
 \begin{document}
+\begin{titlepage}
+  \vspace*{5cm}
+  \begin{center}
+    \Large\bfseries
+	Relazione di laboratorio
+  \end{center}
+  \begin{center}
+  \large
+  Corso di Algoritmi Avanzati\\
+  Laurea Magistrale in Informatica\\A.A. 2019-2020
+  \end{center}
+  \vspace{4cm plus 1fill}
+  \begin{flushleft}
+  \large
+    Magarotto Francesco\\Muraro Enrico\\Piva Giulio
+  \end{flushleft}
+\end{titlepage}
+\newpage
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{grafici/prim.pdf}
+\caption{Grafico andamento algoritmo di Prim}
+\end{figure}
 
-\maketitle
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{grafici/kruskal.pdf}
+\caption{Grafico andamento algoritmo di Kruskal}
+\end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{grafici/kruskaluf.pdf}
+\caption{Grafico andamento algoritmo di Kruskal con Union-Find}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{grafici/confronto.pdf}
+\caption{Grafico che mette in relazione i tempi di esecuzione dei tre algoritmi in base al tempo richiesto per la loro esecuzione}
+\end{figure}
 
 \section{Kruskal}
 \begin{multicols}{2}
