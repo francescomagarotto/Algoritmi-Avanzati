@@ -1,0 +1,30 @@
+\section{Introduzione}
+
+L'esercizio di laboratorio consiste nel implementare, valutare e confrontare tre algoritmi per il problema del Minimum Spanning Tree. Gli algoritmi sono:
+\begin{itemize}
+	\item Prim implementato con Heap
+	\item Kruskal in versione naive
+	\item Kruskal implementato con Union-Find
+\end{itemize} 
+Il linguaggio di programmazione scelto dal nostro gruppo è Java.
+
+
+\subsection{Strutture dati utilizzate}
+
+Per rappresentare il grafo abbiamo creato la classe Graph che contiene sia una lista non ordinata di tutti i lati, che una lista di adiacenza per ogni nodo. 
+I lati sono rappresentati dalla classe Edge che contiene tre valori interi, il nodo di partenza, il nodo di arrivo e il peso del lato.
+
+La lista di adiacenza è implementata attraverso una HashMap dove la chiave è il nodo, e il valore è una lista di tutti i lati adiacenti al nodo stesso implementata con una LinkedList. Abbiamo scelto una HashMap al posto di un array dove ogni indice corrisponde al nodo con quel valore, per evitare di allocare un array sparso quando il valore dei nodi non rispecchia effettivamente il numero di nodi nel grafo, pur mantenendo un tempo di accesso alla lista costante.
+
+La classe Heap è una nostra implementazione di MinHeap. L'albero binario è rappresentato da un array di interi, i valori all'interno dell'array corrispondono ai nodi presenti nel grafo. Il confronto tra i nodi per determinare il più piccolo è effettuato tramite un Comparator passato alla creazione dello Heap, questo per avere un'implementazione di Heap indipendente dal modo in cui viene utilizzato da uno specifico algoritmo.
+
+\subsection{Implementazione di Prim}
+Prim necessita di due campi aggiuntivi "key" e "parent" per ogni nodo, key contiene l'attuale peso più piccolo per raggiungere il nodo, e parent contiene il nodo da cui si arriva. Questi campi sono stati implementati con due HashMap come per la lista di adiacenza.
+
+L'Heap viene inizializzato con tutti i nodi del grafo, e nel costruttore viene passata un'istanza di NodeComparator che utilizza il campo key per confrontare i nodi. 
+
+Il Set Q contiene tutti i nodi che non sono ancora nel MST, ed è utile per vedere il nodo che stiamo valutando non è nel MST in tempo costante al posto di cercarlo nello Heap in tempo lineare.
+
+Il costo totale del MST viene infine calcolato semplicemente scorrendo tutti i nodi e sommando i loro valori di key.
+\subsection{Implementazione di Kruskal naive}
+\subsection{Implementazione di Kruskal con Union-Find}
