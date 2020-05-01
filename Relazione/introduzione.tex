@@ -5,13 +5,13 @@ L'esercizio di laboratorio consiste nel implementare, valutare e confrontare tre
 	\item Prim implementato con Heap
 	\item Kruskal in versione naive
 	\item Kruskal implementato con Union-Find
-\end{itemize} 
+\end{itemize}
 Il linguaggio di programmazione scelto dal nostro gruppo è Java.
 
 
 \subsection{Strutture dati utilizzate}
 
-Per rappresentare il grafo abbiamo creato la classe Graph che contiene sia una lista non ordinata di tutti i lati, che una lista di adiacenza per ogni nodo. 
+Per rappresentare il grafo abbiamo creato la classe Graph che contiene sia una lista non ordinata di tutti i lati, che una lista di adiacenza per ogni nodo.
 I lati sono rappresentati dalla classe Edge che contiene tre valori interi, il nodo di partenza, il nodo di arrivo e il peso del lato.
 
 La lista di adiacenza è implementata attraverso una HashMap dove la chiave è il nodo, e il valore è una lista di tutti i lati adiacenti al nodo stesso implementata con una LinkedList. Abbiamo scelto una HashMap al posto di un array dove ogni indice corrisponde al nodo con quel valore, per evitare di allocare un array sparso quando il valore dei nodi non rispecchia effettivamente il numero di nodi nel grafo, pur mantenendo un tempo di accesso alla lista costante.
@@ -21,7 +21,7 @@ La classe Heap è una nostra implementazione di MinHeap. L'albero binario è rap
 \subsection{Implementazione di Prim}
 Prim necessita di due campi aggiuntivi "key" e "parent" per ogni nodo, key contiene l'attuale peso più piccolo per raggiungere il nodo, e parent contiene il nodo da cui si arriva. Questi campi sono stati implementati con due HashMap come per la lista di adiacenza.
 
-L'Heap viene inizializzato con tutti i nodi del grafo, e nel costruttore viene passata un'istanza di NodeComparator che utilizza il campo key per confrontare i nodi. 
+L'Heap viene inizializzato con tutti i nodi del grafo, e nel costruttore viene passata un'istanza di NodeComparator che utilizza il campo key per confrontare i nodi.
 
 Il Set Q contiene tutti i nodi che non sono ancora nel MST, ed è utile per vedere il nodo che stiamo valutando non è nel MST in tempo costante al posto di cercarlo nello Heap in tempo lineare.
 
@@ -31,3 +31,8 @@ L'implementazione di Kruskal "Naive" necessita che la lista degli archi sia ordi
 \subsubsection{\texttt{findPath}}
 \texttt{findPath} è il metodo che implementa iterativamente BFS e ritorna un valore booleano se e solo se esiste un cammino dal nodo di partenza a quello di destinazione. L'idea principale si basa sullo scorrere la lista di adiacenza del nodo di partenza tenendo traccia dei vertici già visitati. Se dal nodo \texttt{s} (start) arrivo ad \texttt{e} (end) allora aggiungendo l'arco $(s, e)$ formerei un ciclo.
 \subsection{Implementazione di Kruskal con Union-Find}
+L' algoritmo funziona esattamente come la versione "Naive", ma utilizza un modo più efficiente per verificare
+che l'aggiunta di un arco non produca un ciclo nel MST. Questo metodo consiste nell'utilizzare una struttura dati per insiemi disgiunti e dei metodi Union e Find. Un sottoinsieme disgiunto è implementata dalla classe \textit{subset}, che
+ha come campi parent e size. Ogni sottoinsieme contiene i vertici di un albero in una foresta. La funzione \textit{find} restituisce la radice dell'albero al quale appartiene il nodo, risalendo di parent in parent. Se l'esecuzione di find su entrambi i nodi restituisce la stessa radice,
+significa che i due nodi appartengono  allo stesso albero, e di conseguenza quell' arco non va aggiunto. Se invece non restituiscono la stessa radice, si procede ad unire i due sottoinsiemi tramite la funzione Union
+e ad aggiungere il lato corrente al MST. Il campo size serve per mantenere un sottoinsieme come albero bilanciato quando si fa l'unione dei due sottoinsiemi, riducendo la complessità di find da $O(n)$ a $O(log(n))$. In totale, la complessità dell'algoritmo diventa $O(m log(n))$.

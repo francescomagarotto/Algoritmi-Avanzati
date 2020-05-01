@@ -23,13 +23,11 @@ public class GraphReader {
         int src = Integer.parseInt(info[0]);
         int dest = Integer.parseInt(info[1]);
         int weight = Integer.parseInt(info[2]);
-        if (src != dest) {
-          Pair<Integer, Integer> key = new Pair<Integer, Integer>(src, dest);
-          if (mappa.putIfAbsent(key, weight) != null) {
-            Integer currentWeight = mappa.get(key);
-            if (currentWeight > weight) {
-              mappa.put(key, weight);
-            }
+        Pair<Integer, Integer> key = new Pair<Integer, Integer>(src, dest);
+        if (mappa.putIfAbsent(key, weight) != null) {
+          Integer currentWeight = mappa.get(key);
+          if (currentWeight > weight) {
+            mappa.put(key, weight);
           }
         }
 

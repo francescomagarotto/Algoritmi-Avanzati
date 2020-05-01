@@ -22,7 +22,7 @@ public class Kruskal {
             Edge e = x.next();
             // if e is not a loop edge and there is not a path from start to end ( no loop),
             // add the edge to MST
-            if ((e.getStart() != e.getEnd()) && !Kruskal.findPath(e.getStart(), e.getEnd(), copy)) {
+            if (!(e.getStart().equals(e.getEnd())) && !Kruskal.findPath(e.getStart(), e.getEnd(), copy)) {
                 copy.addEdge(e.getStart(), e.getEnd(), e.getWeight());
                 res.add(e);
             }
