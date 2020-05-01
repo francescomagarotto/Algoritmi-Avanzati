@@ -26,5 +26,8 @@ L'Heap viene inizializzato con tutti i nodi del grafo, e nel costruttore viene p
 Il Set Q contiene tutti i nodi che non sono ancora nel MST, ed è utile per vedere il nodo che stiamo valutando non è nel MST in tempo costante al posto di cercarlo nello Heap in tempo lineare.
 
 Il costo totale del MST viene infine calcolato semplicemente scorrendo tutti i nodi e sommando i loro valori di key.
-\subsection{Implementazione di Kruskal naive}
+\subsection{Implementazione di Kruskal Naive}
+L'implementazione di Kruskal "Naive" necessita che la lista degli archi sia ordinata in maniera crescente in base al peso, per effettuare tale operazione si è fatto uso degli stream introdotti in Java 8. Infatti, l'ordinamento dalla libreria standard è implementato attraverso l'algoritmo Timsort che ha complessità  nel caso peggiore $O(n \ast log(n))$, mentre nel caso migliore $O(n)$ e quindi, in alcuni casi, potrebbe essere più efficiente di Merge Sort. Inoltre, viene fatto uso di una lista per contenere gli archi dell'MST e di un grafo temporaneo utilizzato per verificare che la condizione di aciclicità sia soddisfatta. Quest'ultima è il fulcro dell'algoritmo e viene realizzata implementando una ricerca BFS iterativa, infatti per aggiungere un arco all'MST bisogna verificare che l'aggiunta di questo arco non crei un ciclo. Questa verifica viene svolta attraverso BFS, infatti se esiste un cammino tra i due nodi dell'arco che sto aggiungendo questo creerebbe un ciclo.
+\subsubsection{\texttt{findPath}}
+\texttt{findPath} è il metodo che implementa iterativamente BFS e ritorna un valore booleano se e solo se esiste un cammino dal nodo di partenza a quello di destinazione. L'idea principale si basa sullo scorrere la lista di adiacenza del nodo di partenza tenendo traccia dei vertici già visitati. Se dal nodo \texttt{s} (start) arrivo ad \texttt{e} (end) allora aggiungendo l'arco $(s, e)$ formerei un ciclo.
 \subsection{Implementazione di Kruskal con Union-Find}
