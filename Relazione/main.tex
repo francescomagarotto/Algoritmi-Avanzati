@@ -39,23 +39,7 @@
 
 \input{introduzione.tex}
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=1]{grafici/prim.pdf}
-\caption{Grafico andamento algoritmo di Prim}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=1]{grafici/kruskal.pdf}
-\caption{Grafico andamento algoritmo di Kruskal}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=1]{grafici/kruskaluf.pdf}
-\caption{Grafico andamento algoritmo di Kruskal con Union-Find}
-\end{figure}
+\newpage
 
 %\begin{figure}[H]
 %\centering
@@ -63,14 +47,11 @@
 %\caption{Grafico che mette in relazione i tempi di esecuzione dei tre algoritmi in base al tempo richiesto per la loro esecuzione}
 %\end{figure}
 
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[]
-\begin{minipage}[b]{10cm}
+
+\section{Risultati ottenuti}
+\begin{table}[H]
+\begin{minipage}[t]{10cm}
+\vspace{0pt}
 \begin{tabular}{|c|c|c|c|c|}
 \rowcolor{gray!50}
 \hline
@@ -113,7 +94,8 @@
 1000          & 0              & 0                   & 31               & -2359192     \\ \hline
 \end{tabular}
 \end{minipage}
-\begin{minipage}[b]{10cm}
+\begin{minipage}[t]{10cm}
+\vspace{0pt}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \rowcolor{gray!50}
@@ -155,7 +137,24 @@
 \caption{Tabella dei risultati. Per ogni algoritmo, i valori si riferiscono al tempo di esecuzione, espressi in ms, di quell'algoritmo con un grafo avente $n$ nodi.}
 \label{t1}
 \end{table}
+\newpage
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{grafici/prim.pdf}
+\caption{Grafico andamento algoritmo di Prim}
+\end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{grafici/kruskal.pdf}
+\caption{Grafico andamento algoritmo di Kruskal}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{grafici/kruskaluf.pdf}
+\caption{Grafico andamento algoritmo di Kruskal con Union-Find}
+\end{figure}
 \newpage
 \input{Conclusione.tex}
 
