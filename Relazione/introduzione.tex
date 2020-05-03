@@ -8,7 +8,16 @@ L'esercizio di laboratorio consiste nel implementare, valutare e confrontare tre
 \end{itemize}
 Il linguaggio di programmazione scelto dal nostro gruppo è Java.
 
-
+\subsection{Esecuzione del programma}
+Gli algoritmi sono stati sviluppati come progetto Maven. All'interno della cartella \'e presente la versione portable di Maven, quindi non e' necessario averlo installato. \'E
+richiesto almeno il JDK 8 installato nel sistema.
+Per Eseguire i tre algoritmi utilizzare i seguenti comandi:\\
+Linux:\\
+\indent \texttt{./mvnw install}\\
+\indent \texttt{./mvnw exec:java}\\
+Windows:\\
+\indent \texttt{mvnw.bat install}\\
+\indent \texttt{mvnw.bat exec:java}
 \subsection{Strutture dati utilizzate}
 
 Per rappresentare il grafo abbiamo creato la classe Graph che contiene sia una lista non ordinata di tutti i lati, che una lista di adiacenza per ogni nodo.
