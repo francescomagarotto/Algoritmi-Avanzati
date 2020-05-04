@@ -9,15 +9,17 @@ L'esercizio di laboratorio consiste nel implementare, valutare e confrontare tre
 Il linguaggio di programmazione scelto dal nostro gruppo è Java.
 
 \subsection{Esecuzione del programma}
-Gli algoritmi sono stati sviluppati come progetto Maven. All'interno della cartella \'e presente la versione portable di Maven, quindi non e' necessario averlo installato. \'E
-richiesto almeno il JDK 8 installato nel sistema.
-Per Eseguire i tre algoritmi utilizzare i seguenti comandi:\\
+Gli algoritmi sono stati sviluppati come progetto Maven. All'interno della cartella \'e presente la versione portable di Maven, pertanto non è necessario averlo installato. \'E
+richiesto almeno il JDK 11 installato nel sistema.
+Per eseguire i tre algoritmi utilizzare i seguenti comandi:\\
 Linux:\\
 \indent \texttt{./mvnw install}\\
 \indent \texttt{./mvnw exec:java}\\
 Windows:\\
 \indent \texttt{mvnw.bat install}\\
 \indent \texttt{mvnw.bat exec:java}
+\uppercase{è} richiesto un tempo di esecuzione di circa 1.30h per l'esecuzione di tutti gli algoritmi su tutti i file. Ulteriori esecuzioni su hardware hanno richiesto circa 2h.
+L'esecuzione del main genera automaticamente dei file csv nella directory del progetto contenenti i tempi registrati.
 \subsection{Strutture dati utilizzate}
 
 Per rappresentare il grafo abbiamo creato la classe Graph che contiene sia una lista non ordinata di tutti i lati, che una lista di adiacenza per ogni nodo.
@@ -40,7 +42,7 @@ Il costo totale del MST viene infine calcolato semplicemente scorrendo tutti i n
 \subsection{Implementazione di Kruskal Naive}
 L'implementazione di Kruskal "Naive" necessita che la lista degli archi sia ordinata in maniera crescente in base al peso, per effettuare tale operazione si è fatto uso degli stream introdotti in Java 8. Infatti, l'ordinamento dalla libreria standard è implementato attraverso l'algoritmo Timsort che ha complessità  nel caso peggiore $O(n \ast log(n))$, mentre nel caso migliore $O(n)$ e quindi, in alcuni casi, potrebbe essere più efficiente di Merge Sort. Inoltre, viene fatto uso di una lista per contenere gli archi dell'MST e di un grafo temporaneo utilizzato per verificare che la condizione di aciclicità sia soddisfatta. Quest'ultima è il fulcro dell'algoritmo e viene realizzata implementando una ricerca BFS iterativa, infatti per aggiungere un arco all'MST bisogna verificare che l'aggiunta di questo arco non crei un ciclo. Questa verifica viene svolta attraverso BFS, infatti se esiste un cammino tra i due nodi dell'arco che sto aggiungendo questo creerebbe un ciclo.
 \subsubsection{\texttt{findPath}}
-\texttt{findPath} è il metodo che implementa iterativamente BFS e ritorna un valore booleano se e solo se esiste un cammino dal nodo di partenza a quello di destinazione. L'idea principale si basa sullo scorrere la lista di adiacenza del nodo di partenza tenendo traccia dei vertici già visitati. Se dal nodo \texttt{s} (start) arrivo ad \texttt{e} (end) allora aggiungendo l'arco $(s, e)$ formerei un ciclo.
+\texttt{findPath} è il metodo che implementa iterativamente BFS e ritorna un valore booleano se e solo se esiste un cammino dal nodo di partenza a quello di destinazione. L'idea principale si basa sullo scorrere la lista di adiacenza del nodo di partenza tenendo traccia dei vertici già visitati. Se dal nodo \textit{s} (start) arrivo ad \textit{e} (end) allora aggiungendo l'arco $(s, e)$ formerei un ciclo.
 \subsection{Implementazione di Kruskal con Union-Find}
 L'algoritmo funziona esattamente come la versione "Naive", ma utilizza un modo più efficiente per verificare
 che l'aggiunta di un arco non produca un ciclo nel MST. Questo metodo consiste nell'utilizzare una struttura dati per insiemi disgiunti e dei metodi Union e Find. Un sottoinsieme disgiunto è implementata dalla classe \textit{subset}, che

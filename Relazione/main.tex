@@ -134,7 +134,7 @@
       100000        & 1077          & 47                  & 869876           & -231011693   \\ \hline
     \end{tabular}
   \end{minipage}
-  \caption{Tabella dei risultati. Per ogni algoritmo, i valori si riferiscono al tempo di esecuzione, espressi in ms, di quell'algoritmo con un grafo avente $n$ nodi.}
+  \caption{Tabella dei risultati. Per ogni algoritmo, i valori si riferiscono al tempo di esecuzione, espressi in ms, di quell'algoritmo con un grafo avente $n$ nodi. Come possiamo vedere gli algoritmi impiegano circa lo stesso tempo per calcolare gli MST di grafi $G = (V, E)$ con $|V| \in [10, 400]$. Differenze maggiori si evidenziano con l'incremento di $|V|$ soprattutto tra l'algoritmo di Kruskal Naive, computazionalmente il più oneroso, e quelli di Prim e Kruskal con Union-Find.}
   \label{t1}
 \end{table}
 \newpage
@@ -147,7 +147,7 @@
 \begin{figure}[H]
   \centering
   \includegraphics[scale=1]{grafici/kruskal.pdf}
-  \caption{Grafico andamento algoritmo di Kruskal}
+  \caption{Grafico andamento algoritmo di Kruskal Naive. Come possiamo vedere i tempi mostrati nell'asse delle ordinate sono nettamente superiori rispetto agli due algoritmi.}
 \end{figure}
 
 \begin{figure}[H]

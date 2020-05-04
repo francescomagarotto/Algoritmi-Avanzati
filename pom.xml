@@ -57,7 +57,7 @@
             </execution>
           </executions>
           <configuration>
-            <mainClass>it.unipd.advancedalgorithms.Prova</mainClass>
+            <mainClass>it.unipd.advancedalgorithms.App</mainClass>
           </configuration>
         </plugin>
       </plugins>
