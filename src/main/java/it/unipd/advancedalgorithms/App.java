@@ -27,7 +27,7 @@ public class App {
     kruskalUnionFindTimes.add(header);
     kruskalTimes.add(header);
     primTimes.add(header);
-    int size = new File("datasets").listFiles().length;
+    int size = new File("mst_dataset").listFiles().length;
     AtomicInteger counter = new AtomicInteger(1);
     try (Stream<Path> paths = Files.walk(Paths.get("mst_dataset"))) {
       paths.filter(Files::isRegularFile).forEach(file -> {
