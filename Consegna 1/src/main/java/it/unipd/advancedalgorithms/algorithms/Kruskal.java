@@ -1,15 +1,10 @@
 package it.unipd.advancedalgorithms.algorithms;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import it.unipd.advancedalgorithms.graph.Edge;
 import it.unipd.advancedalgorithms.graph.Graph;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Kruskal {
     public static int MST(Graph g) {

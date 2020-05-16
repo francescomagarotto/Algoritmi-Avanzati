@@ -7,7 +7,9 @@
       "label": "Compile",
       "type": "shell",
       "command": "javac ${file}",
-      "args": ["*.java"],
+      "args": [
+        "*.java"
+      ],
       "options": {
         "cwd": "${workspaceRoot}/src"
       }
@@ -16,7 +18,9 @@
       "label": "Clean",
       "type": "shell",
       "command": "rm",
-      "args": ["*.class"],
+      "args": [
+        "*.class"
+      ],
       "options": {
         "cwd": "${workspaceRoot}/src"
       }
