@@ -7,3 +7,5 @@ Advanced-Algorithms\.iml
 *.log
 *.aux
 Relazione/main.synctex.gz
+
+*.class
