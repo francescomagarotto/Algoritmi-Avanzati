@@ -1,4 +1,4 @@
-package it.unipd.advancedalgorithms.graph;
+package it.unipd.graph;
 
 import org.javatuples.Pair;
 

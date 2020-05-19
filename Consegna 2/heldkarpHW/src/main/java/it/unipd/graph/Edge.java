@@ -1,4 +1,4 @@
-package it.unipd.advancedalgorithms.graph;
+package it.unipd.graph;
 
 public class Edge {
     private Integer start;

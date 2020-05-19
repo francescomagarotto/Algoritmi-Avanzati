@@ -1,5 +1,4 @@
-package it.unipd.advancedalgorithms.graph;
-
+package it.unipd.graph;
 
 import java.util.Comparator;
 
@@ -40,8 +39,8 @@ public class Heap {
 
     private void heapify(int index) {
         if (!isLeaf(index)) {
-            if (comparator.compare(tree[index], tree[leftChild(index)]) > 0 ||
-                    comparator.compare(tree[index], tree[rightChild(index)]) > 0) {
+            if (comparator.compare(tree[index], tree[leftChild(index)]) > 0
+                    || comparator.compare(tree[index], tree[rightChild(index)]) > 0) {
 
                 if (comparator.compare(tree[leftChild(index)], tree[rightChild(index)]) < 0) {
                     swap(index, leftChild(index));

@@ -1,8 +1,8 @@
-package it.unipd.advancedalgorithms.algorithms;
+package it.unipd.algorithms;
 
-import it.unipd.advancedalgorithms.graph.Edge;
-import it.unipd.advancedalgorithms.graph.Graph;
-import it.unipd.advancedalgorithms.graph.Heap;
+import it.unipd.graph.Edge;
+import it.unipd.graph.Graph;
+import it.unipd.graph.Heap;
 
 import java.util.*;
 
@@ -46,7 +46,6 @@ public class Prim {
             if (node != s)
                 totalCost += key.get(node);
         }
-
 
         List<Edge> A = new LinkedList<>(); // minimum spanning tree
         for (Integer node : key.keySet()) {
