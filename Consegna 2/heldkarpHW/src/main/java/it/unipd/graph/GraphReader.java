@@ -13,25 +13,26 @@ public class GraphReader {
         try {
             boolean geo = false;
             List<String> file = Files.readAllLines(Paths.get(path));
-            int dimension = Integer.parseInt(file.get(3).split(" ")[1]);
+            int dimension = Integer.parseInt(file.get(3).split(":")[1].trim());
             Integer[][] weight = new Integer[dimension+1][dimension+1];
             Arrays.stream(weight).forEach(a -> Arrays.fill(a, 0));
-            if(file.get(4).equals("EDGE_WEIGHT_TYPE: GEO")) geo = true;
-            Iterator<String> cords = file.listIterator(7);
+            if(file.stream().map(p -> p.replaceAll(" ", "")).filter(p -> p.equals("EDGE_WEIGHT_TYPE:GEO")).count() == 1L) geo = true;
+            int start = file.indexOf("NODE_COORD_SECTION");
+            Iterator<String> cords = file.listIterator( start+ 1);
             while(cords.hasNext()) {
                 String[] line = cords.next().trim().split(" ");
                 if(line[0].equals("EOF")) continue;
                 int currentVertex = Integer.parseInt(line[0]);
                 double longitude1 = Double.parseDouble(line[2]);
                 double latitude1 = Double.parseDouble(line[1]);
-                Iterator<String> subcords = file.listIterator(7);
+                Iterator<String> subcords = file.listIterator(start + 1);
                 while(subcords.hasNext()) {
                     String[] subline = subcords.next().trim().split(" ");
                     if(subline[0].equals("EOF")) continue;
                     int nextVertex = Integer.parseInt(subline[0]);
                     if(nextVertex != currentVertex) {
-                        double longitude2 = Double.parseDouble(line[2]);
-                        double latitude2 = Double.parseDouble(line[1]);
+                        double longitude2 = Double.parseDouble(subline[2]);
+                        double latitude2 = Double.parseDouble(subline[1]);
                         int costo = 0;
                         if(geo) {
                             costo = geoToWeight(
@@ -42,7 +43,9 @@ public class GraphReader {
                             );
                         }
                         else {
-                              costo = (int) Math.sqrt(Math.pow(latitude1 - latitude2, 2) + Math.pow(longitude1 - longitude2, 2));
+                            double delta_x = latitude1 - latitude2;
+                            double delta_y = longitude1 - longitude2;
+                            costo = (int) Math.sqrt(Math.pow(delta_x, 2) + Math.pow(delta_y, 2));
                         }
                         weight[currentVertex][nextVertex] = costo;
                         weight[nextVertex][currentVertex] = costo;
@@ -51,8 +54,8 @@ public class GraphReader {
                         weight[currentVertex][nextVertex] = 0;
                     }
                 }
-            return  weight;
             }
+            return  weight;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,7 +66,7 @@ public class GraphReader {
     static double degToRad(double value) {
         int deg = (int) value;
         double min = value - deg;
-        return PI * (deg + 5.0 * min/ 3.0) / 180.0;
+        return Math.PI * (deg + 5.0 * min/ 3.0) / 180.0;
     }
 
     static int geoToWeight(double longitude1, double longitude2, double latitude1, double latitude2) {
