@@ -32,8 +32,9 @@ public class GraphReader {
                     if(nextVertex != currentVertex) {
                         double longitude2 = Double.parseDouble(line[2]);
                         double latitude2 = Double.parseDouble(line[1]);
+                        int costo = 0;
                         if(geo) {
-                            weight[currentVertex][nextVertex] = weight[nextVertex][currentVertex] = geoToWeight(
+                            costo = geoToWeight(
                                     degToRad(longitude1),
                                     degToRad(longitude2),
                                     degToRad(latitude1),
@@ -41,10 +42,10 @@ public class GraphReader {
                             );
                         }
                         else {
-                            weight[currentVertex][nextVertex] = weight[nextVertex][currentVertex] =
-                                    (int) Math.sqrt(Math.pow(latitude1 - latitude2, 2) + Math.pow(longitude1 - longitude2, 2));
-
+                              costo = (int) Math.sqrt(Math.pow(latitude1 - latitude2, 2) + Math.pow(longitude1 - longitude2, 2));
                         }
+                        weight[currentVertex][nextVertex] = costo;
+                        weight[nextVertex][currentVertex] = costo;
                     }
                     else {
                         weight[currentVertex][nextVertex] = 0;
