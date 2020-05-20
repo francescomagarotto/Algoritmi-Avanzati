@@ -14,21 +14,21 @@ public class GraphReader {
             boolean geo = false;
             List<String> file = Files.readAllLines(Paths.get(path));
             int dimension = Integer.parseInt(file.get(3).split(":")[1].trim());
-            Integer[][] weight = new Integer[dimension+1][dimension+1];
+            Integer[][] weight = new Integer[dimension][dimension];
             Arrays.stream(weight).forEach(a -> Arrays.fill(a, 0));
             if(file.stream().map(p -> p.replaceAll(" ", "")).filter(p -> p.equals("EDGE_WEIGHT_TYPE:GEO")).count() == 1L) geo = true;
             int start = file.indexOf("NODE_COORD_SECTION");
             Iterator<String> cords = file.listIterator( start+ 1);
             while(cords.hasNext()) {
-                String[] line = cords.next().trim().split(" ");
-                if(line[0].equals("EOF")) continue;
+                String[] line = cords.next().trim().split("\\s+");
+                if(line[0].equals("EOF")) break;
                 int currentVertex = Integer.parseInt(line[0]);
                 double longitude1 = Double.parseDouble(line[2]);
                 double latitude1 = Double.parseDouble(line[1]);
                 Iterator<String> subcords = file.listIterator(start + 1);
                 while(subcords.hasNext()) {
-                    String[] subline = subcords.next().trim().split(" ");
-                    if(subline[0].equals("EOF")) continue;
+                    String[] subline = subcords.next().trim().split("\\s+");
+                    if(subline[0].equals("EOF")) break;
                     int nextVertex = Integer.parseInt(subline[0]);
                     if(nextVertex != currentVertex) {
                         double longitude2 = Double.parseDouble(subline[2]);
@@ -47,11 +47,11 @@ public class GraphReader {
                             double delta_y = longitude1 - longitude2;
                             costo = (int) Math.sqrt(Math.pow(delta_x, 2) + Math.pow(delta_y, 2));
                         }
-                        weight[currentVertex][nextVertex] = costo;
-                        weight[nextVertex][currentVertex] = costo;
+                        weight[currentVertex-1][nextVertex-1] = costo;
+                        weight[nextVertex-1][currentVertex-1] = costo;
                     }
                     else {
-                        weight[currentVertex][nextVertex] = 0;
+                        weight[currentVertex-1][nextVertex-1] = 0;
                     }
                 }
             }

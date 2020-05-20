@@ -10,6 +10,7 @@ public class HeldKarp {
 
   private ArrayList<HashMap<Set<Integer>, Integer>> calculatedDistance;
   private ArrayList<HashMap<Set<Integer>, Integer>> parent;
+  private Integer[][] matrix;
 
   private Integer getDistance(int i, Set<Integer> S) {
     return calculatedDistance.get(i).get(S);
@@ -55,19 +56,23 @@ public class HeldKarp {
   }
 
   private int w(int u, int v) {
-    return 0;
+    return matrix[u][v];
   }
 
-  public int HK_TSP(Graph g) {
-    calculatedDistance = new ArrayList<>(g.getnVertex());
-    parent = new ArrayList<>(g.getnVertex());
+  public int HK_TSP(Integer[][] graphMatrix) {
+    matrix = graphMatrix;
+    int nVertex = graphMatrix.length;
 
-    for (int i = 0; i < g.getnVertex(); i++) {
-      //calculatedDistance.set(i,new HashMap<>());
-      //parent.set(i, new HashMap<>());
+    calculatedDistance = new ArrayList<>(nVertex);
+    parent = new ArrayList<>(nVertex);
+    HashSet<Integer> V = new HashSet<>();
+
+    for(int i = 0; i < nVertex; i++) {
+      calculatedDistance.add(new HashMap<>());
+      parent.add(new HashMap<>());
+      V.add(i);
     }
 
-    HashSet<Integer> V = new HashSet<>(); //g.nodes
     return HK_Visit(0, V);
 
   }
