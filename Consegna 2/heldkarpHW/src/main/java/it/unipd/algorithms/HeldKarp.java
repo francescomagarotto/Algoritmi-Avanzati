@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HeldKarp {
 
   private ArrayList<HashMap<Set<Integer>, Integer>> calculatedDistance;
   private ArrayList<HashMap<Set<Integer>, Integer>> parent;
   private Integer[][] matrix;
+  public static AtomicBoolean interrupted;
 
   private Integer getDistance(int i, Set<Integer> S) {
     return calculatedDistance.get(i).get(S);
@@ -28,7 +30,7 @@ public class HeldKarp {
     parent.get(i).put(S, p);
   }
 
-  public int HK_Visit(int v, Set<Integer> S) {
+  private int HK_Visit(int v, Set<Integer> S) {
     if (S.size() == 1 && S.contains(v))
       return w(v, 0);
     else if (getDistance(v, S) != null)
@@ -47,6 +49,9 @@ public class HeldKarp {
           mindist = dist + w(u, v);
           minprec = u;
         }
+
+        //if the algorithm is stopped early interrupt the cycle and return the current minimum
+        if(interrupted.get()) break;
       }
 
       setDistance(v, S, mindist);
@@ -63,9 +68,11 @@ public class HeldKarp {
     matrix = graphMatrix;
     int nVertex = graphMatrix.length;
 
+
     calculatedDistance = new ArrayList<>(nVertex);
     parent = new ArrayList<>(nVertex);
     HashSet<Integer> V = new HashSet<>();
+    HeldKarp.interrupted = new AtomicBoolean(false);
 
     for(int i = 0; i < nVertex; i++) {
       calculatedDistance.add(new HashMap<>());
@@ -73,8 +80,8 @@ public class HeldKarp {
       V.add(i);
     }
 
-    return HK_Visit(0, V);
 
+    return HK_Visit(0, V);
   }
 
 }
