@@ -3,19 +3,10 @@ package it.unipd;
 import it.unipd.algorithms.HeldKarp;
 import it.unipd.algorithms.NearestApprox;
 import it.unipd.graph.GraphReader;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Hello world!
- *
- */
 public class App {
     public static void main(String[] args) {
         String file = "berlin52.tsp";
@@ -26,6 +17,8 @@ public class App {
 
         //System.out.println("dimensione: " + dimension);
         //System.out.println("cammino:" + NearestApprox.solve(dimension, w));
+        //Integer totalcost = primAdjMatrix.solve(0, w, dimension);
+        //System.out.println(totalcost);
         /*
         for(int i = 0; i < w.length; ++i) {
             for(int j = 0; j < w.length; ++j) {
