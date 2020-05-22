@@ -1,5 +1,6 @@
 package it.unipd;
 
+import it.unipd.algorithms.TwoApproxAlgorithm;
 import it.unipd.algorithms.HeldKarp;
 import it.unipd.algorithms.NearestApprox;
 import it.unipd.graph.GraphReader;
@@ -9,12 +10,13 @@ import java.util.concurrent.TimeUnit;
 
 public class App {
     public static void main(String[] args) {
-        String file = "ch150.tsp";
+        String file = "eil51.tsp";
         Integer dimension = GraphReader.getNodes("tsp_dataset/" + file);
         Integer[][] w = GraphReader.getGraph("tsp_dataset/" + file);
 
-        testHK(w, file);
-
+        //testHK(w, file);
+        Integer totalcost = TwoApproxAlgorithm.solve(0, w, dimension);
+        System.out.println(totalcost);
         //System.out.println("dimensione: " + dimension);
         //System.out.println("cammino:" + NearestApprox.solve(dimension, w));
         //Integer totalcost = primAdjMatrix.solve(0, w, dimension);

@@ -1,12 +1,10 @@
 package it.unipd.algorithms;
 
-import it.unipd.graph.Edge;
-import it.unipd.graph.Graph;
 import it.unipd.graph.Heap;
 
 import java.util.*;
 
-public class primAdjMatrix {
+public class TwoApproxAlgorithm {
     private static Map<Integer, Integer> key;
 
     public static List<Integer> DFS(int s, HashMap<Integer, List<Integer>> tree) {
@@ -34,7 +32,7 @@ public class primAdjMatrix {
         return path;
     }
 
-    public static int solve(int s, Integer[][] g, int nVertices) {
+    public static Map<Integer, Integer> prim(int s, Integer[][] g, int nVertices) {
         key = new HashMap<>();
         Map<Integer, Integer> parent = new HashMap<>();
         Set<Integer> Q = new HashSet<>(); // contains all the nodes not in the MST
@@ -63,20 +61,13 @@ public class primAdjMatrix {
             }
         }
 
-        int totalCost = 0;
-        for (Integer node : key.keySet()) {
-            if (node != s)
-                totalCost += key.get(node);
-        }
+        return parent;
+    }
 
-        List<Edge> A = new LinkedList<>(); // minimum spanning tree
-        for (Integer node : key.keySet()) {
-            if (node != s)
-                A.add(new Edge(node, parent.get(node), key.get(node)));
-        }
-        //return A;
+    public static int solve(int s, Integer[][] g, int nVertices) {
+        Map<Integer, Integer> parent = prim(s, g, nVertices);
         HashMap<Integer, List<Integer>> tree = new HashMap<>();
-
+        Integer totalCost = 0;
         for (int i = 0; i < nVertices; i++) {
             List<Integer> l = new LinkedList<Integer>();
             tree.put(i, l);
@@ -88,7 +79,6 @@ public class primAdjMatrix {
 
         List<Integer> path = DFS(0, tree);
         path.add(0);
-        System.out.println(path);
         for (int i = 0; i < path.size() - 1; i++) {
             totalCost += g[path.get(i)][path.get(i + 1)];
         }
