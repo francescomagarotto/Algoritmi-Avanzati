@@ -9,7 +9,32 @@ import java.util.*;
 public class primAdjMatrix {
     private static Map<Integer, Integer> key;
 
-    public static int solve(Graph G, int s, int[][] g, int nVertices) {
+    public static List<Integer> DFS(int s, HashMap<Integer, List<Integer>> tree) {
+        LinkedList<Integer> stack = new LinkedList<>();
+        HashMap<Integer, Boolean> visited = new HashMap<>(tree.keySet().size());
+        for (Integer node : tree.keySet())
+            visited.put(node, false);
+        visited.put(s, true);
+        stack.addFirst(s);
+        LinkedList<Integer> path = new LinkedList<>();
+        while (stack.size() != 0) {
+            int current = stack.poll();
+            path.addLast(current);
+            Iterator<Integer> itr = tree.get(current).iterator();
+            if (!visited.get(current)) {
+                visited.put(current, true);
+            }
+            while (itr.hasNext()) {
+                int v = itr.next();
+                if (!visited.get(v)) { // continue with BFS
+                    stack.addFirst(v);
+                }
+            }
+        }
+        return path;
+    }
+
+    public static int solve(int s, Integer[][] g, int nVertices) {
         key = new HashMap<>();
         Map<Integer, Integer> parent = new HashMap<>();
         Set<Integer> Q = new HashSet<>(); // contains all the nodes not in the MST
@@ -28,10 +53,12 @@ public class primAdjMatrix {
             Integer u = minHeap.poll(); // get the node with the smallest key
             Q.remove(u);
             for (int i = 0; i < nVertices; i++) {
-                if (Q.contains(i) && g[u][i] < key.get(i)) {
-                    parent.replace(i, u);
-                    key.replace(i, g[u][i]);
-                    minHeap.update(i);
+                if (u != i) {
+                    if (Q.contains(i) && g[u][i] < key.get(i)) {
+                        parent.replace(i, u);
+                        key.replace(i, g[u][i]);
+                        minHeap.update(i);
+                    }
                 }
             }
         }
@@ -48,39 +75,24 @@ public class primAdjMatrix {
                 A.add(new Edge(node, parent.get(node), key.get(node)));
         }
         //return A;
+        HashMap<Integer, List<Integer>> tree = new HashMap<>();
 
+        for (int i = 0; i < nVertices; i++) {
+            List<Integer> l = new LinkedList<Integer>();
+            tree.put(i, l);
+        }
+        for (int i = 1; i < nVertices; i++) {
+            Integer p = parent.get(i);
+            tree.get(p).add(i);
+        }
+
+        List<Integer> path = DFS(0, tree);
+        System.out.println(path);
+        for (int i = 0; i < path.size() - 1; i++) {
+            totalCost += g[i][path.get(i + 1)];
+        }
+        totalCost += g[path.get(path.size() - 1)][0];
         return totalCost;
-    }
-
-    // dumb implementation
-    public static List<Edge> dumbSolve(Graph G, int s) {
-        List<Edge> A = new ArrayList<>(); // List of edges that form the minimum spanning tree
-        Set<Integer> X = new HashSet<>(); // Set of nodes that have been visited
-        X.add(s);
-
-        Edge lightEdge;
-        do {
-            // reset current light edge
-            lightEdge = new Edge(-1, -1, Integer.MAX_VALUE);
-
-            // find light edge
-            for (Edge e : G.getEdges()) {
-                if (X.contains(e.getStart()) && !X.contains(e.getEnd())) {
-                    if (e.getWeight() < lightEdge.getWeight()) {
-                        lightEdge = e;
-                    }
-                }
-            }
-
-            if (lightEdge.getStart() != -1) {
-                // add light edge to A and update X
-                A.add(lightEdge);
-                X.add(lightEdge.getEnd());
-            }
-
-        } while (lightEdge.getStart() != -1); // there is no light edge
-
-        return A;
     }
 
     // Used in minHeap to sort the nodes by key
@@ -92,4 +104,5 @@ public class primAdjMatrix {
             return key1.compareTo(key2);
         }
     }
+
 }
