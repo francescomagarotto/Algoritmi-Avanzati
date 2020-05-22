@@ -7,7 +7,7 @@ import it.unipd.algorithms.primAdjMatrix;
 
 public class App {
     public static void main(String[] args) {
-        String file = "burma14.tsp";
+        String file = "ch150.tsp";
         Integer dimension = GraphReader.getNodes("tsp_dataset/" + file);
         Integer[][] w = GraphReader.getGraph("tsp_dataset/" + file);
         System.out.println("dimensione: " + dimension);

@@ -87,11 +87,11 @@ public class primAdjMatrix {
         }
 
         List<Integer> path = DFS(0, tree);
+        path.add(0);
         System.out.println(path);
         for (int i = 0; i < path.size() - 1; i++) {
-            totalCost += g[i][path.get(i + 1)];
+            totalCost += g[path.get(i)][path.get(i + 1)];
         }
-        totalCost += g[path.get(path.size() - 1)][0];
         return totalCost;
     }
 
