@@ -16,18 +16,9 @@ public class App {
 
         //testHK(w, file);
         Integer totalcost = TwoApproxAlgorithm.solve(0, w, dimension);
-        System.out.println(totalcost);
-        //System.out.println("dimensione: " + dimension);
-        //System.out.println("cammino:" + NearestApprox.solve(dimension, w));
-        //Integer totalcost = primAdjMatrix.solve(0, w, dimension);
-        //System.out.println(totalcost);
-        /*
-        for(int i = 0; i < w.length; ++i) {
-            for(int j = 0; j < w.length; ++j) {
-                System.out.print(w[i][j] + " ");
-            }
-            System.out.print("\n");
-        }*/
+        System.out.println("cammino 2-approximation: " + totalcost);
+        totalcost = NearestApprox.solve(dimension, w);
+        System.out.println("cammino nearest-approximation: " + totalcost);
     }
 
     public static void testHK(Integer[][] g, String file) {

@@ -68,6 +68,7 @@ public class TwoApproxAlgorithm {
         Map<Integer, Integer> parent = prim(s, g, nVertices);
         HashMap<Integer, List<Integer>> tree = new HashMap<>();
         Integer totalCost = 0;
+
         for (int i = 0; i < nVertices; i++) {
             List<Integer> l = new LinkedList<Integer>();
             tree.put(i, l);
@@ -79,6 +80,7 @@ public class TwoApproxAlgorithm {
 
         List<Integer> path = DFS(0, tree);
         path.add(0);
+
         for (int i = 0; i < path.size() - 1; i++) {
             totalCost += g[path.get(i)][path.get(i + 1)];
         }
