@@ -5,34 +5,24 @@ import it.unipd.graph.Heap;
 import java.util.*;
 
 public class TwoApproxAlgorithm {
-    private static Map<Integer, Integer> key;
 
-    public static List<Integer> DFS(int s, HashMap<Integer, List<Integer>> tree) {
-        LinkedList<Integer> stack = new LinkedList<>();
-        HashMap<Integer, Boolean> visited = new HashMap<>(tree.keySet().size());
-        for (Integer node : tree.keySet())
-            visited.put(node, false);
-        visited.put(s, true);
-        stack.addFirst(s);
-        LinkedList<Integer> path = new LinkedList<>();
-        while (stack.size() != 0) {
-            int current = stack.poll();
-            path.addLast(current);
-            Iterator<Integer> itr = tree.get(current).iterator();
-            if (!visited.get(current)) {
-                visited.put(current, true);
-            }
-            while (itr.hasNext()) {
-                int v = itr.next();
-                if (!visited.get(v)) { // continue with BFS
-                    stack.addFirst(v);
-                }
-            }
-        }
-        return path;
+
+    public static List<Integer> Preorder(int s, HashMap<Integer, List<Integer>> tree) {
+      List<Integer> visited = new ArrayList<>();
+      PreorderRec(s, tree, visited);
+      return visited;
     }
 
-    public static Map<Integer, Integer> prim(int s, Integer[][] g, int nVertices) {
+    private static void PreorderRec(int s, HashMap<Integer, List<Integer>> tree, List<Integer> visited) {
+      visited.add(s);
+      for(int child : tree.get(s)) {
+        PreorderRec(child, tree, visited);
+      }
+    }
+
+    private static Map<Integer, Integer> key;
+    public static Map<Integer, Integer> prim(int s, Integer[][] g) {
+        int nVertices = g.length;
         key = new HashMap<>();
         Map<Integer, Integer> parent = new HashMap<>();
         Set<Integer> Q = new HashSet<>(); // contains all the nodes not in the MST
@@ -50,22 +40,20 @@ public class TwoApproxAlgorithm {
         while (!Q.isEmpty()) {
             Integer u = minHeap.poll(); // get the node with the smallest key
             Q.remove(u);
-            for (int i = 0; i < nVertices; i++) {
-                if (u != i) {
-                    if (Q.contains(i) && g[u][i] < key.get(i)) {
-                        parent.replace(i, u);
-                        key.replace(i, g[u][i]);
-                        minHeap.update(i);
-                    }
+            for (int i : Q) {
+                if (g[u][i] < key.get(i)) {
+                    parent.replace(i, u);
+                    key.replace(i, g[u][i]);
+                    minHeap.update(i);
                 }
             }
         }
-
         return parent;
     }
 
-    public static int solve(int s, Integer[][] g, int nVertices) {
-        Map<Integer, Integer> parent = prim(s, g, nVertices);
+    public static int solve(int s, Integer[][] g) {
+        int nVertices = g.length;
+        Map<Integer, Integer> parent = prim(s, g);
         HashMap<Integer, List<Integer>> tree = new HashMap<>();
         Integer totalCost = 0;
 
@@ -78,7 +66,7 @@ public class TwoApproxAlgorithm {
             tree.get(p).add(i);
         }
 
-        List<Integer> path = DFS(0, tree);
+        List<Integer> path = Preorder(0, tree);
         path.add(0);
 
         for (int i = 0; i < path.size() - 1; i++) {

@@ -15,7 +15,7 @@ public class App {
         Integer[][] w = GraphReader.getGraph("tsp_dataset/" + file);
 
         //testHK(w, file);
-        Integer totalcost = TwoApproxAlgorithm.solve(0, w, dimension);
+        Integer totalcost = TwoApproxAlgorithm.solve(0, w);
         System.out.println("cammino 2-approximation: " + totalcost);
         totalcost = NearestApprox.solve(dimension, w);
         System.out.println("cammino nearest-approximation: " + totalcost);
