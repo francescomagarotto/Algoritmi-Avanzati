@@ -58,8 +58,8 @@ public class App {
 
                 System.out.println("FILE: " + f +  "\tSOL. OTTIMA: " + solottima);
                 System.out.println("HK: \n\tSOLUZIONE: " + heldkarp[0].intValue() + "\n\tTEMPO ESECUZIONE: " + heldkarp[1].toString() + "\n\tERRORE: (" + heldkarp[0].intValue() + " - " + solottima  + ")/" + solottima + " = " +  getError(heldkarp[0].intValue(), solottima));
-                System.out.println("2APPROX: \n\tSOLUZIONE: " + twoapproxcost + "\n\tTEMPO ESECUZIONE: " + twoApproxExTime + "\n\tERRORE: (" + twoapproxcost + " - " + solottima  + ")/" + solottima + " = " + getError(nearestcost, solottima)) ;
-                System.out.println("NEAREST: \n\tSOLUZIONE: " +nearestcost + "\n\tTEMPO ESECUZIONE: " + nearestExTime + "\n\tERRORE: (" + nearestcost + " - " + solottima  + ")/" + solottima + " = " + getError(twoapproxcost, solottima));
+                System.out.println("2APPROX: \n\tSOLUZIONE: " + twoapproxcost + "\n\tTEMPO ESECUZIONE: " + twoApproxExTime + "\n\tERRORE: (" + twoapproxcost + " - " + solottima  + ")/" + solottima + " = " + getError(twoapproxcost, solottima)) ;
+                System.out.println("NEAREST: \n\tSOLUZIONE: " +nearestcost + "\n\tTEMPO ESECUZIONE: " + nearestExTime + "\n\tERRORE: (" + nearestcost + " - " + solottima  + ")/" + solottima + " = " + getError(nearestcost, solottima));
                 System.out.print("\n\n");
                 table.add(new String[]{f,
                         heldkarp[0].toString(), heldkarp[1].toString(), getError(heldkarp[0].intValue(), solottima),
