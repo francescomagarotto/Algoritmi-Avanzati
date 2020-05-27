@@ -91,7 +91,7 @@ public class App {
         int res = new HeldKarp().HK_TSP(g);
         long t2 = System.currentTimeMillis();
         int elapsedSeconds = (int) ((t2 - t1) / 1000.0);
-        executor.shutdown();
+        executor.shutdownNow();
         return new Integer[] {res, elapsedSeconds};
     }
     private static void printFile(final String filename, final List<String[]> entries) {
