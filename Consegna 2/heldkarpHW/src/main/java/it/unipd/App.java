@@ -1,32 +1,85 @@
 package it.unipd;
 
+import com.opencsv.CSVWriter;
 import it.unipd.algorithms.TwoApproxAlgorithm;
 import it.unipd.algorithms.HeldKarp;
 import it.unipd.algorithms.NearestApprox;
 import it.unipd.graph.GraphReader;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 public class App {
     public static void main(String[] args) {
-        String file = "eil51.tsp";
-        Integer dimension = GraphReader.getNodes("tsp_dataset/" + file);
-        Integer[][] w = GraphReader.getGraph("tsp_dataset/" + file);
+        final List<String[]> table = new ArrayList<String[]>();
+        final HashMap<String, Integer> soluzioneOttima = new HashMap<>();
+        soluzioneOttima.put("burma14.tsp", 3323);
+        soluzioneOttima.put("ulysses16.tsp",6859);
+        soluzioneOttima.put("ulysses22.tsp",7013);
+        soluzioneOttima.put("eil51.tsp",426);
+        soluzioneOttima.put("berlin52.tsp",7542);
+        soluzioneOttima.put("kroD100.tsp",21294);
+        soluzioneOttima.put("kroA100.tsp",21282);
+        soluzioneOttima.put("ch150.tsp",6528);
+        soluzioneOttima.put("gr202.tsp",40160);
+        soluzioneOttima.put("gr229.tsp",134602);
+        soluzioneOttima.put("pcb442.tsp",50778);
+        soluzioneOttima.put("d493.tsp",35002);
+        soluzioneOttima.put("dsj1000.tsp",18659688);
+        AtomicInteger counter = new AtomicInteger(1);
+        try (Stream<Path> paths = Files.walk(Paths.get("tsp_dataset"))) {
+            paths.filter(Files::isRegularFile).forEach(file -> {
+                String f = file.getFileName().toString();
+                System.out.println("-------- " + counter.getAndIncrement() + " ---------");
+                Integer solottima = soluzioneOttima.get(f);
+                Integer dimension = GraphReader.getNodes("tsp_dataset/" + f);
+                Integer[][] w = GraphReader.getGraph("tsp_dataset/" + f);
+                //testHK(w, file);
+                long twoApproxStart = System.currentTimeMillis();
+                Integer twoapproxcost = TwoApproxAlgorithm.solve(0, w);
+                Long twoApproxExTime = (System.currentTimeMillis() - twoApproxStart)/1000;
+                long nearestStart = System.currentTimeMillis();
+                Integer nearestcost = NearestApprox.solve(dimension, w);
+                Long nearestExTime = (System.currentTimeMillis() - nearestStart)/1000;
+                Integer[] heldkarp = testHK(w, f);
+                System.out.println(f + "\n\tHK: " + heldkarp[0] + "\n\t" + "2APPROX: " + twoapproxcost + "\n\t" + "NEAREST: " + nearestcost);
+                table.add(new String[]{f,
+                        heldkarp[0].toString(), heldkarp[1].toString(), getError(heldkarp[0], solottima),
+                        nearestcost.toString(), nearestExTime.toString(), getError(nearestcost, solottima),
+                        twoapproxcost.toString(), twoApproxExTime.toString(), getError(twoapproxcost, solottima)
+                        });
+            });
+        }
+        catch(Exception ignored) {
 
-        //testHK(w, file);
-        Integer totalcost = TwoApproxAlgorithm.solve(0, w);
-        System.out.println("cammino 2-approximation: " + totalcost);
-        totalcost = NearestApprox.solve(dimension, w);
-        System.out.println("cammino nearest-approximation: " + totalcost);
+        }
+        printFile("tabella.csv", table);
     }
 
-    public static void testHK(Integer[][] g, String file) {
+    static String getError(Integer costo, Integer solottima) {
+        int d = (costo-solottima)/solottima;
+        return Integer.toString(d);
+    }
+
+    public static Integer[] testHK(Integer[][] g, String file) {
 
         Runnable interruptHK = new Runnable() {
             @Override
             public void run() {
-                System.out.println("Timeout");
+                System.out.println("Timeout for " + file);
                 HeldKarp.interrupted.set(true);
             }
         };
@@ -37,9 +90,21 @@ public class App {
         long t1 = System.currentTimeMillis();
         int res = new HeldKarp().HK_TSP(g);
         long t2 = System.currentTimeMillis();
-        double elapsedSeconds = (t2 - t1) / 1000.0;
-        System.out.println(file + " " + res + " " + elapsedSeconds);
+        int elapsedSeconds = (int) ((t2 - t1) / 1000.0);
         executor.shutdown();
+        return new Integer[] {res, elapsedSeconds};
     }
-
+    private static void printFile(final String filename, final List<String[]> entries) {
+        try {
+            Files.deleteIfExists(Paths.get(filename));
+        } catch (Exception ignored) {
+        }
+        try (FileOutputStream fos = new FileOutputStream(filename);
+             OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+             CSVWriter writer = new CSVWriter(osw, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
+                     CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
+            writer.writeAll(entries);
+        } catch (IOException ignored) {
+        }
+    }
 }
