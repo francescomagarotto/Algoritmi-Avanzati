@@ -50,14 +50,19 @@ public class App {
                 //testHK(w, file);
                 long twoApproxStart = System.currentTimeMillis();
                 Integer twoapproxcost = TwoApproxAlgorithm.solve(0, w);
-                Long twoApproxExTime = (System.currentTimeMillis() - twoApproxStart)/1000;
+                Double twoApproxExTime = ((double) (System.currentTimeMillis() - twoApproxStart))/1000.0;
                 long nearestStart = System.currentTimeMillis();
                 Integer nearestcost = NearestApprox.solve(dimension, w);
-                Long nearestExTime = (System.currentTimeMillis() - nearestStart)/1000;
-                Integer[] heldkarp = testHK(w, f);
-                System.out.println(f + "\n\tHK: " + heldkarp[0] + "\n\t" + "2APPROX: " + twoapproxcost + "\n\t" + "NEAREST: " + nearestcost);
+                Double nearestExTime = ((double) (System.currentTimeMillis() - nearestStart))/1000.0;
+                Double[] heldkarp = testHK(w, f);
+
+                System.out.println("FILE: " + f +  "\tSOL. OTTIMA: " + solottima);
+                System.out.println("HK: \n\tSOLUZIONE: " + heldkarp[0].intValue() + "\n\tTEMPO ESECUZIONE: " + heldkarp[1].toString() + "\n\tERRORE: (" + heldkarp[0].intValue() + " - " + solottima  + ")/" + solottima + " = " +  getError(heldkarp[0].intValue(), solottima));
+                System.out.println("2APPROX: \n\tSOLUZIONE: " + twoapproxcost + "\n\tTEMPO ESECUZIONE: " + twoApproxExTime + "\n\tERRORE: (" + twoapproxcost + " - " + solottima  + ")/" + solottima + " = " + getError(nearestcost, solottima)) ;
+                System.out.println("NEAREST: \n\tSOLUZIONE: " +nearestcost + "\n\tTEMPO ESECUZIONE: " + nearestExTime + "\n\tERRORE: (" + nearestcost + " - " + solottima  + ")/" + solottima + " = " + getError(twoapproxcost, solottima));
+                System.out.print("\n\n");
                 table.add(new String[]{f,
-                        heldkarp[0].toString(), heldkarp[1].toString(), getError(heldkarp[0], solottima),
+                        heldkarp[0].toString(), heldkarp[1].toString(), getError(heldkarp[0].intValue(), solottima),
                         nearestcost.toString(), nearestExTime.toString(), getError(nearestcost, solottima),
                         twoapproxcost.toString(), twoApproxExTime.toString(), getError(twoapproxcost, solottima)
                         });
@@ -70,11 +75,11 @@ public class App {
     }
 
     static String getError(Integer costo, Integer solottima) {
-        int d = (costo-solottima)/solottima;
-        return Integer.toString(d);
+        double d = ((costo-solottima)/solottima.doubleValue())*100;
+        return Double.toString(d);
     }
 
-    public static Integer[] testHK(Integer[][] g, String file) {
+    public static Double[] testHK(Integer[][] g, String file) {
 
         Runnable interruptHK = new Runnable() {
             @Override
@@ -88,11 +93,11 @@ public class App {
         executor.schedule(interruptHK, 30, TimeUnit.SECONDS);
 
         long t1 = System.currentTimeMillis();
-        int res = new HeldKarp().HK_TSP(g);
+        double res = new HeldKarp().HK_TSP(g);
         long t2 = System.currentTimeMillis();
-        int elapsedSeconds = (int) ((t2 - t1) / 1000.0);
+        double elapsedSeconds = ((double) (t2 - t1)) / 1000.0;
         executor.shutdown();
-        return new Integer[] {res, elapsedSeconds};
+        return new Double[] {res, elapsedSeconds};
     }
     private static void printFile(final String filename, final List<String[]> entries) {
         try {
