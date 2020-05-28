@@ -17,8 +17,9 @@ public class GraphReader {
             Integer[][] weight = new Integer[dimension][dimension];
             Arrays.stream(weight).forEach(a -> Arrays.fill(a, 0));
             if (file.stream().map(p -> p.replaceAll(" ", "")).filter(p -> p.equals("EDGE_WEIGHT_TYPE:GEO"))
-                    .count() == 1L)
+                    .count() == 1L) {
                 geo = true;
+            }
             int start = file.indexOf("NODE_COORD_SECTION");
             Iterator<String> cords = file.listIterator(start + 1);
             while (cords.hasNext()) {
@@ -44,7 +45,7 @@ public class GraphReader {
                         } else {
                             double delta_x = latitude1 - latitude2;
                             double delta_y = longitude1 - longitude2;
-                            costo = (int) Math.sqrt(Math.pow(delta_x, 2) + Math.pow(delta_y, 2));
+                            costo = (int) Math.round(Math.sqrt(Math.pow(delta_x, 2) + Math.pow(delta_y, 2)));
                         }
                         weight[currentVertex - 1][nextVertex - 1] = costo;
                         weight[nextVertex - 1][currentVertex - 1] = costo;

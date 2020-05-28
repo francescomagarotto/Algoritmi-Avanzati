@@ -24,7 +24,7 @@ public class NearestApprox {
 
             while (notVisitedIterator.hasNext()) {
                 Integer node = notVisitedIterator.next();
-                if (graph[currentVertex][node] <= minDistance) {
+                if (graph[currentVertex][node] < minDistance) {
                     minDistance = graph[currentVertex][node];
                     nextNode = node;
                 }
@@ -32,9 +32,8 @@ public class NearestApprox {
             visited.add(nextNode);
             notVisited.remove(nextNode);
             sumOfPath += graph[currentVertex][nextNode];
-
             currentVertex = nextNode;
         }
-        return sumOfPath + graph[visited.get(visited.size() - 1)][0];
+        return sumOfPath + graph[currentVertex][0];
     }
 }
