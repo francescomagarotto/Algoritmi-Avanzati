@@ -4,20 +4,16 @@
 \usepackage{csvsimple}
 \usepackage[utf8]{inputenc}
 \usepackage{float}
-\usepackage[table,xcdraw]{xcolor}
+\usepackage{pdfpages}
 \usepackage[scaled]{helvet}
 \renewcommand\familydefault{\sfdefault} 
 \usepackage{pgfplots}
-\usepackage{multirow}
-\usepackage[table,xcdraw]{xcolor}
-\pgfplotsset{compat=newest}
 \usepackage{pdflscape}
 %opening
 \title{Relazione laboratorio Algoritmi Avanzati}
 \author{Magarotto Francesco\\Muraro Enrico\\Piva Giulio}
 
 \begin{document}
-\rowcolors{2}{gray!25}{white}
 \begin{titlepage}
   \vspace*{5cm}
   \begin{center}
@@ -45,9 +41,9 @@
 %\includegraphics[scale=1]{grafici/confronto.pdf}
 %\caption{Grafico che mette in relazione i tempi di esecuzione dei tre algoritmi in base al tempo richiesto per la loro esecuzione}
 %\end{figure}
-\begin{landscape}
 \section{Risultati ottenuti}
-\input{tabella.tex}
-\end{landscape}
-
+\begin{figure}[ht]
+	\centering
+	\includepdf[pages=-]{tabellapdf}
+\end{figure}
 \end{document}
