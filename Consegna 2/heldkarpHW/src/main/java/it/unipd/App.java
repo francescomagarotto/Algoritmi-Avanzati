@@ -90,7 +90,7 @@ public class App {
         };
 
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.schedule(interruptHK, 120, TimeUnit.SECONDS);
+        executor.schedule(interruptHK, 300, TimeUnit.SECONDS);
 
         long t1 = System.currentTimeMillis();
         double res = new HeldKarp().HK_TSP(g);

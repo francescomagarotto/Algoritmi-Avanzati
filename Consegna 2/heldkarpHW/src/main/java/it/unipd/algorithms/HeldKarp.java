@@ -70,7 +70,7 @@ public class HeldKarp {
     calculatedDistance = new ArrayList<>(nVertex);
     parent = new ArrayList<>(nVertex);
     HashSet<Integer> V = new HashSet<>();
-    
+
     //reset interrupted flag
     HeldKarp.interrupted = new AtomicBoolean(false);
 
