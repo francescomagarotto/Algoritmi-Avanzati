@@ -75,8 +75,8 @@ public class App {
     }
 
     static String getError(Integer costo, Integer solottima) {
-        double d = ((costo-solottima)/solottima.doubleValue())*100;
-        return String.format("%.2f", d);
+        double d = ((costo-solottima)/solottima.doubleValue());
+        return Double.toString(Math.round(d * 100.0) / 100.0);
     }
 
     public static Double[] testHK(Integer[][] g, String file) {
