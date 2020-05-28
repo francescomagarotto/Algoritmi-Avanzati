@@ -59,7 +59,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <mainClass>it.unipd.advancedalgorithms.App</mainClass>
+                        <mainClass>it.unipd.App</mainClass>
                     </configuration>
                 </plugin>
             </plugins>
