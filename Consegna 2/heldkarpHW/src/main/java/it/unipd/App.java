@@ -75,8 +75,8 @@ public class App {
     }
 
     static String getError(Integer costo, Integer solottima) {
-        double d = ((costo-solottima)/solottima.doubleValue())*100;
-        return Double.toString(d);
+        double d = ((costo-solottima)/solottima.doubleValue());
+        return Double.toString(Math.round(d * 100.0) / 100.0);
     }
 
     public static Double[] testHK(Integer[][] g, String file) {
@@ -90,7 +90,7 @@ public class App {
         };
 
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.schedule(interruptHK, 30, TimeUnit.SECONDS);
+        executor.schedule(interruptHK, 120, TimeUnit.SECONDS);
 
         long t1 = System.currentTimeMillis();
         double res = new HeldKarp().HK_TSP(g);
