@@ -1,6 +1,5 @@
 package it.unipd.algorithms;
 
-import it.unipd.graph.Graph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -68,12 +67,14 @@ public class HeldKarp {
     matrix = graphMatrix;
     int nVertex = graphMatrix.length;
 
-
     calculatedDistance = new ArrayList<>(nVertex);
     parent = new ArrayList<>(nVertex);
     HashSet<Integer> V = new HashSet<>();
+    
+    //reset interrupted flag
     HeldKarp.interrupted = new AtomicBoolean(false);
 
+    //initialize data structures
     for(int i = 0; i < nVertex; i++) {
       calculatedDistance.add(new HashMap<>());
       parent.add(new HashMap<>());
