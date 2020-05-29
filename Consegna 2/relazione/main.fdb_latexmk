@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1590779437 "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.tex" "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.pdf" "main" 1590779439
+["pdflatex"] 1590779682 "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.tex" "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.pdf" "main" 1590779683
   "/etc/texmf/web2c/texmf.cnf" 1584900812 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.aux" 1590779439 158 5ff86f8908458a258e5825b41675c0ed ""
+  "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.aux" 1590779683 158 5ff86f8908458a258e5825b41675c0ed ""
   "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.tex" 1590778155 1265 e8d4f12447087c76964ce4b95b05850c ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -179,15 +179,15 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1584914597 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1584914631 4126522 b4fea6ea847d4eb99ef2d69b76629316 ""
-  "introduzione.aux" 1590779439 1332 adc67f45be21cfeab52e5b157f3222b6 ""
-  "introduzione.tex" 1590779436 4875 73658c6be90292b317056c04f32bf61f ""
-  "main.aux" 1590779439 158 5ff86f8908458a258e5825b41675c0ed ""
+  "introduzione.aux" 1590779683 1332 adc67f45be21cfeab52e5b157f3222b6 ""
+  "introduzione.tex" 1590779681 5010 456cdb1801c6811ccdab21d45e9c7ac9 ""
+  "main.aux" 1590779683 158 5ff86f8908458a258e5825b41675c0ed ""
   "main.tex" 1590778155 1265 e8d4f12447087c76964ce4b95b05850c ""
   "tabellapdf.pdf" 1590778155 62302 f65dd49e4df073828b3e7e14e347828f ""
   (generated)
-  "main.log"
-  "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.pdf"
   "main.aux"
+  "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.pdf"
   "/home/Algoritmi-Avanzati/Consegna 2/relazione/main.log"
   "introduzione.aux"
+  "main.log"
   "main.pdf"
