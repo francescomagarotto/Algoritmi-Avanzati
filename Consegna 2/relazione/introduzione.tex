@@ -1,0 +1,40 @@
+\section{Introduzione}
+
+L'esercizio di laboratorio consiste nel implementare e valutare tre algoritmi per il problema del \textit{travel salesman problem} (TSP). Gli algoritmi sono:
+\begin{itemize}
+	\item Held-Karp;
+	\item L'euristica costruttiva Nearest Neighbor;
+	\item 2 approssimato;
+\end{itemize}
+Il linguaggio di programmazione scelto dal nostro gruppo è Java.
+
+\subsection{Esecuzione del programma}
+Gli algoritmi sono stati sviluppati come progetto Maven. All'interno della cartella \'e presente la versione portable di Maven, pertanto non è necessario averlo installato. \'E
+richiesto almeno il JDK 11 installato nel sistema.
+Per eseguire i tre algoritmi utilizzare i seguenti comandi:\\
+Linux:\\
+\indent \texttt{./mvnw install}\\
+\indent \texttt{./mvnw exec:java}\\
+Windows:\\
+\indent \texttt{mvnw.cmd install}\\
+\indent \texttt{mvnw.cmd exec:java}
+\uppercase{è} richiesto un tempo di esecuzione in relazione al tempo di timeout impostato per l'algoritmo di Held-Karp.
+L'esecuzione del main genera automaticamente dei file csv nella directory del progetto contenenti i tempi registrati.
+\subsection{Strutture dati utilizzate}
+
+Per rappresentare il grafo abbiamo utilizzato una matrice di adiacenza, essendo i grafi densi.
+
+Nell'algoritmo 2 Approssimato abbiamo fatto uso di un HashMap per registrare la visita in preordine del grafo.
+
+La classe Heap è una nostra implementazione di MinHeap. L'albero binario è rappresentato da un array di interi, i valori all'interno dell'array corrispondono ai nodi presenti nel grafo. Il confronto tra i nodi per determinare il più piccolo è effettuato tramite un Comparator passato alla creazione dello Heap, questo per avere un'implementazione di Heap indipendente dal modo in cui viene utilizzato da uno specifico algoritmo.
+\subsection{Lettura di un grafo da file}
+Per caricare un grafo in memoria, abbiamo implementato una classe GraphReader, che si occupa della lettura del file tramite la libreria \textit{nio} di Java. Dato che gli algoritmi implementati sono basati sull'assunzione che non ci siano doppi archi tra nodi,
+abbiamo tenuto quello di peso minore. I self-loop, invece, vengono mantenuti, anche se durante l'esecuzione degli algoritmi verranno effettivamente ignorati.
+\subsection{Implementazione di Prim (da sistemare)} 
+Prim necessita di due campi aggiuntivi "key" e "parent" per ogni nodo, key contiene l'attuale peso più piccolo per raggiungere il nodo, e parent contiene il nodo da cui si arriva. Questi campi sono stati implementati con due HashMap come per la lista di adiacenza.
+
+L'Heap viene inizializzato con tutti i nodi del grafo, e nel costruttore viene passata un'istanza di NodeComparator che utilizza il campo key per confrontare i nodi.
+
+Il Set Q contiene tutti i nodi che non sono ancora nel MST, ed è utile per vedere il nodo che stiamo valutando non è nel MST in tempo costante al posto di cercarlo nello Heap in tempo lineare.
+
+Il costo totale del MST viene infine calcolato semplicemente scorrendo tutti i nodi e sommando i loro valori di key.
