@@ -1,6 +1,6 @@
 \documentclass[a4paper]{article}
 \usepackage[italian]{babel}
-\usepackage[left=1cm, right=1cm, bottom=2cm, top=2cm]{geometry}
+\usepackage[left=3cm, right=3cm, bottom=2cm, top=2cm]{geometry}
 \usepackage{csvsimple}
 \usepackage[utf8]{inputenc}
 \usepackage{float}
@@ -41,8 +41,10 @@
 %\end{figure}
 \include{introduzione}
 \section{Risultati ottenuti}
-\begin{figure}[H]
+	\begin{figure}[H]
 	\centering
-	\includepdf[pages=-]{tabellapdf}
-\end{figure}
+	\includepdf[pages={-}]{tabellapdf}
+	\end{figure}
+\vspace*{6.5cm}
+Come possiamo vedere nella tabella, nell'algoritmo di Held-Karp solo poche istanze \textbf{non} sono andate in \textit{timeout}. Infatti,  i grafi con tempo di esecuzione maggiore di 300.000, ovvero sono state fermate. 
 \end{document}

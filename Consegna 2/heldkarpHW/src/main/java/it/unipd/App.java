@@ -76,7 +76,7 @@ public class App {
 
     static String getError(Integer costo, Integer solottima) {
         double d = ((costo-solottima)/solottima.doubleValue());
-        return Double.toString(Math.round(d * 100.0) / 100.0);
+        return Double.toString(Math.round(d * 100.0));
     }
 
     public static Double[] testHK(Integer[][] g, String file) {
@@ -106,7 +106,7 @@ public class App {
         }
         try (FileOutputStream fos = new FileOutputStream(filename);
              OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
-             CSVWriter writer = new CSVWriter(osw, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
+             CSVWriter writer = new CSVWriter(osw, ';', CSVWriter.NO_QUOTE_CHARACTER,
                      CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
             writer.writeAll(entries);
         } catch (IOException ignored) {
