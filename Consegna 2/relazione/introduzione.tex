@@ -1,0 +1,58 @@
+\section{Introduzione}
+
+L'esercizio di laboratorio consiste nel implementare e valutare tre algoritmi per il problema del \textit{travel salesman problem} (TSP). Gli algoritmi sono:
+\begin{itemize}
+	\item Held-Karp;
+	\item L'euristica costruttiva Nearest Neighbor;
+	\item 2 approssimato;
+\end{itemize}
+Il linguaggio di programmazione scelto dal nostro gruppo è Java.
+
+\subsection{Esecuzione del programma}
+Gli algoritmi sono stati sviluppati come progetto Maven. All'interno della cartella \'e presente la versione portable di Maven, pertanto non è necessario averlo installato. \'E
+richiesto almeno il JDK 11 installato nel sistema.
+Per eseguire i tre algoritmi utilizzare i seguenti comandi:\\
+Linux:\\
+\indent \texttt{./mvnw install}\\
+\indent \texttt{./mvnw exec:java}\\
+Windows:\\
+\indent \texttt{mvnw.cmd install}\\
+\indent \texttt{mvnw.cmd exec:java}
+
+\uppercase{è} richiesto un tempo di esecuzione in relazione al tempo di timeout impostato per l'algoritmo di Held-Karp. Il valore di default del timeout è di 5 minuti.
+L'esecuzione del main genera automaticamente dei file csv nella directory del progetto contenenti i tempi registrati per tutti e tre gli algoritmi eseguiti su tutti i file del dataset.
+\subsection{Strutture dati utilizzate}
+
+Per rappresentare il grafo abbiamo utilizzato una matrice di adiacenza visto che i sono grafi completi e la matrice viene quindi riempita senza sprechi di memoria.
+
+Nell'algoritmo 2 Approssimato abbiamo fatto uso di un HashMap per registrare la visita in preordine del grafo.
+
+La classe Heap è una nostra implementazione di MinHeap. L'albero binario è rappresentato da un array di interi, i valori all'interno dell'array corrispondono ai nodi presenti nel grafo. Il confronto tra i nodi per determinare il più piccolo è effettuato tramite un Comparator passato alla creazione dello Heap, questo per avere un'implementazione di Heap indipendente dal modo in cui viene utilizzato da uno specifico algoritmo.
+\subsection{Lettura di un grafo da file}
+Per caricare un grafo in memoria, abbiamo implementato una classe GraphReader, che si occupa della lettura del file tramite la libreria \textit{nio} di Java. Inoltre effettua le conversioni di distanza necessarie sia per i file di tipo GEO che EUC\_2D e ritorna direttamente la matrice di adiacenza del grafo.
+
+\subsection{Implementazione di Prim (da sistemare)}
+Prim necessita di due campi aggiuntivi "key" e "parent" per ogni nodo, key contiene l'attuale peso più piccolo per raggiungere il nodo, e parent contiene il nodo da cui si arriva. Questi campi sono stati implementati con due HashMap come per la lista di adiacenza.
+
+L'Heap viene inizializzato con tutti i nodi del grafo, e nel costruttore viene passata un'istanza di NodeComparator che utilizza il campo key per confrontare i nodi.
+
+Il Set Q contiene tutti i nodi che non sono ancora nel MST, ed è utile per vedere il nodo che stiamo valutando non è nel MST in tempo costante al posto di cercarlo nello Heap in tempo lineare.
+
+Il costo totale del MST viene infine calcolato semplicemente scorrendo tutti i nodi e sommando i loro valori di key.
+
+\subsection{Implementazione di Held-Karp}
+
+L'algoritmo di Held-Karp necessita di due strutture di supporto, una per salvare le distanze minime già calcolate e una per ricordare il nodo precedente in modo da poter ricostruire il percoso trovato. Visto che entrambi sono identificati da due valori (v,S) dove 'v' è un nodo e 'S' un insieme di nodi abbiamo deciso di implementare entrambe con ArrayList di HashMap. Ogni posizione dell'ArrayList corrisponde a un nodo e contiene una mappa che ha come chiave un Set di nodi. In questo modo con due accessi costanti possiamo trovare il valore desiderato.
+
+Il timeout di Held-Karp è controllato da un flag booleano, quando viene impostato il valore del flag a 'true' il ciclo che cerca il minimo viene interrotto e l'algoritmo ritorna la soluzione migliore trovata fino a quel momento.
+
+Quando eseguiamo l'algoritmo facciamo quindi partire un thread usando ScheduledExecutorService, che dopo 5 minuti imposta il flag a 'true' terminando l'esecuzione.
+
+\subsection{Implementazione dell'euristica nearest-neighbor}
+L'Euristica nearest-neighbor consiste nel trovare il prossimo vertice, non ancora inserito nel circuito, a distanza minima dal nodo corrente. Una volta visitati tutti i nodi
+ripetendo questa operazione si otter\'a un percordo 2-approssimato per il problema del TSP. Questa euristica \'e di facile implementazione, ma allo stesso tempo molto efficace.
+
+\subsection{Implementazione dell'algoritmo 2-approssimato}
+L'algoritmo 2-approssimato \'e basato su una tecnica molto semplice: Si trova un MST con l'algoritmo di Prim e poi si visita l'albero in ordine prefisso.
+Nel nostro caso, Prim restituisce il MST sotto forma di HashMap, dove la chiave \'e un nodo e il value la lista dei suoi figli. A questo punto l'albero viene visitato in ordine
+prefisso dal metodo Preorder, restituendo un percorso approssimato per il problema del TSP.

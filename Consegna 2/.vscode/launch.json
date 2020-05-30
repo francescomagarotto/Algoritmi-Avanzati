@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "CodeLens (Launch) - Prova",
+      "request": "launch",
+      "mainClass": "it.unipd.Prova",
+      "projectName": "heldkarpHW"
+    },
+    {
+      "type": "java",
       "name": "Debug (Launch) - Current File",
       "request": "launch",
       "mainClass": "${file}"
@@ -15,6 +22,14 @@
       "name": "Debug (Launch)-App<heldkarpHW>",
       "request": "launch",
       "mainClass": "it.unipd.App",
+      "projectName": "heldkarpHW",
+      "cwd": "${workspaceFolder}/heldkarpHW"
+    },
+    {
+      "type": "java",
+      "name": "Debug Prova",
+      "request": "launch",
+      "mainClass": "it.unipd.Prova",
       "projectName": "heldkarpHW",
       "cwd": "${workspaceFolder}/heldkarpHW"
     }
