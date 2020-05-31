@@ -1,6 +1,6 @@
 \documentclass[a4paper]{article}
 \usepackage[italian]{babel}
-\usepackage[left=3cm, right=3cm, bottom=2cm, top=2cm]{geometry}
+\usepackage[left=2cm, right=2cm, bottom=2cm, top=2cm]{geometry}
 \usepackage{csvsimple}
 \usepackage[utf8]{inputenc}
 \usepackage{float}
@@ -33,18 +33,28 @@
 \end{titlepage}
 \newpage
 
-
-%\begin{figure}[H]
-%\centering
-%\includegraphics[scale=1]{grafici/confronto.pdf}
-%\caption{Grafico che mette in relazione i tempi di esecuzione dei tre algoritmi in base al tempo richiesto per la loro esecuzione}
-%\end{figure}
-\include{introduzione}
+\input{introduzione}
 \section{Risultati ottenuti}
-	\begin{figure}[H]
+\begin{figure}[H]
 	\centering
-	\includepdf[pages={-}]{tabellapdf}
-	\end{figure}
-\vspace*{6.5cm}
-Come possiamo vedere nella tabella, nell'algoritmo di Held-Karp solo poche istanze \textbf{non} sono andate in \textit{timeout}. Infatti,  i grafi con tempo di esecuzione maggiore di 300.000, ovvero sono state fermate. 
+	\includegraphics[width=17cm]{tabellapdf}
+\end{figure}
+Come possiamo vedere dalla tabella, nell'algoritmo di Held-Karp solo poche istanze \textbf{non} sono andate in \textit{timeout}. Infatti, i grafi con tempo di esecuzione maggiore di circa 300000 secondi, sono state interrotte. Pertanto l'83.3\% delle esecuzioni dell'algoritmo di Held-Karp ritorna la soluzione calcolata fino a quel momento, con un conseguente tasso di errore molto alto, anche del 2860\% come nel caso dell'istanza \texttt{dsj1000.tsp}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{2approx}
+	\label{fig:2approx}
+\end{figure}
+Questa tabella invece mostra l'approssimazione calcolata dall'algoritmo è 2 approssimata. Infatti,
+$\frac{Soluzione}{Solzione\ ottima} = \rho(p) \leq 2$
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=17cm]{errore}
+	\caption{Istogramma che mette in relazione gli errori dei tre algoritmi utilizzando la scala logaritmica. Come era prevedibile dalla tabella sopra, l'errore maggiore è presente nell'algoritmo di Held-Karp}	\label{fig:errore}
+\end{center}
+\end{figure}
+
+\section{Conclusioni}
+L'algoritmo migliore tra i tre è l'euristica Nearest che presenta un tasso di errore minore, avvicinandosi di più alla soluzione ottima. La complessità dell'euristica Nearest Neighbor è $O(log(n))$ approssimata a TSP, quando la disuguaglianza triangolare è rispettata, mentre Held-Karp con table filling ha complessità $O(n^2*2^n)$, che è esponenziale.
 \end{document}
