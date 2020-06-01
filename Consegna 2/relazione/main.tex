@@ -43,7 +43,7 @@ Come possiamo vedere dalla tabella, nell'algoritmo di Held-Karp solo poche istan
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{2approx}
+	\includegraphics[width=0.5\linewidth]{2approx}
 	\label{fig:2approx}
 \end{figure}
 Questa tabella invece mostra l'approssimazione calcolata dall'algoritmo è 2 approssimata. Infatti,
@@ -51,10 +51,19 @@ $\frac{Soluzione}{Solzione\ ottima} = \rho(p) \leq 2$
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=17cm]{errore}
-	\caption{Istogramma che mette in relazione gli errori dei tre algoritmi utilizzando la scala logaritmica. Come era prevedibile dalla tabella sopra, l'errore maggiore è presente nell'algoritmo di Held-Karp}	\label{fig:errore}
+	\caption{Istogramma che mette in relazione gli errori dei tre algoritmi utilizzando la scala logaritmica. Come era prevedibile dalla tabella sopra, l'errore maggiore è presente nell'algoritmo di Held-Karp, che in questi pochi esempi non è sempre crescente poiché il numero di istanze è esiguo. Certamente con un numero di maggiore di nodi, avremmo due possibili scenari: mantenendo lo stesso tempo massimo di esecuzione, l'errore sarebbe molto alto, mentre aumentando il tempo di esecuzione, lo stack verrebbe riempito delle chiamate ricorsive, portando ad un'eccezione runtime OutOfMemory.}	\label{fig:errore}
 \end{center}
 \end{figure}
 
+\subsubsection{Tempo di timeout Held-Karp}
+Abbiamo provato varie esecuzioni dell'algoritmo di Held-Karp per verificare come varia l'errore in relazione al raddoppio del tempo prima del timeout.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{differenze_errori}
+	\label{fig:timeouttiming}
+	\caption{Tabella che mostra come l'errore sia variato in relazione all'aumento del tempo di esecuzione dell'algoritmo. In particolare, aumentando il tempo prima del timeout da 5 a 10 minuti, solo i grafi di dimensione compresa tra 20 e 100 hanno avuto un beneficio. I grafi con un numero di nodi superiore a 200 \textbf{non} hanno avuto alcun beneficio dall'aumento del tempo di esecuzione.}
+\end{figure}
+
 \section{Conclusioni}
-L'algoritmo migliore tra i tre è l'euristica Nearest che presenta un tasso di errore minore, avvicinandosi di più alla soluzione ottima. La complessità dell'euristica Nearest Neighbor è $O(log(n))$ approssimata a TSP, quando la disuguaglianza triangolare è rispettata, mentre Held-Karp con table filling ha complessità $O(n^2*2^n)$, che è esponenziale.
+L'algoritmo migliore tra i tre è l'euristica Nearest che presenta un tasso di errore minore, avvicinandosi di più alla soluzione ottima. La soluzione dell'euristica Nearest Neighbor è $O(log(n))$ - approssimata a TSP, quando la disuguaglianza triangolare è rispettata. La complessità Held-Karp con table filling ha complessità $O(n^2*2^n)$, che è esponenziale e interropendo l'esecuzione a 5 minuti non permette .
 \end{document}
