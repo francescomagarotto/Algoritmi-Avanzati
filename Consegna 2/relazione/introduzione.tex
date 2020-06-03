@@ -31,14 +31,6 @@ La classe Heap è una nostra implementazione di MinHeap. L'albero binario è rap
 \subsection{Lettura di un grafo da file}
 Per caricare un grafo in memoria, abbiamo implementato una classe GraphReader, che si occupa della lettura del file tramite la libreria \textit{nio} di Java. Inoltre effettua le conversioni di distanza necessarie sia per i file di tipo GEO che EUC\_2D e ritorna direttamente la matrice di adiacenza del grafo.
 
-\subsection{Implementazione di Prim (da sistemare)}
-Prim necessita di due campi aggiuntivi "key" e "parent" per ogni nodo, key contiene l'attuale peso più piccolo per raggiungere il nodo, e parent contiene il nodo da cui si arriva. Questi campi sono stati implementati con due HashMap come per la lista di adiacenza.
-
-L'Heap viene inizializzato con tutti i nodi del grafo, e nel costruttore viene passata un'istanza di NodeComparator che utilizza il campo key per confrontare i nodi.
-
-Il Set Q contiene tutti i nodi che non sono ancora nel MST, ed è utile per vedere il nodo che stiamo valutando non è nel MST in tempo costante al posto di cercarlo nello Heap in tempo lineare.
-
-Il costo totale del MST viene infine calcolato semplicemente scorrendo tutti i nodi e sommando i loro valori di key.
 
 \subsection{Implementazione di Held-Karp}
 

@@ -39,7 +39,7 @@
 	\centering
 	\includegraphics[width=17cm]{tabellapdf}
 \end{figure}
-Come possiamo vedere dalla tabella, nell'algoritmo di Held-Karp solo poche istanze \textbf{non} sono andate in \textit{timeout}. Infatti, i grafi con tempo di esecuzione maggiore di circa 300000 secondi, sono state interrotte. Pertanto l'83.3\% delle esecuzioni dell'algoritmo di Held-Karp ritorna la soluzione calcolata fino a quel momento, con un conseguente tasso di errore molto alto, anche del 2860\% come nel caso dell'istanza \texttt{dsj1000.tsp}.
+Come possiamo vedere dalla tabella, nell'algoritmo di Held-Karp solo poche istanze \textbf{non} sono andate in \textit{timeout}. Infatti, i grafi con tempo di esecuzione maggiore di circa 300 secondi, sono state interrotte. Pertanto l'83.3\% delle esecuzioni dell'algoritmo di Held-Karp ritorna la soluzione calcolata fino a quel momento, con un conseguente tasso di errore molto alto, anche del 2860\% come nel caso dell'istanza \texttt{dsj1000.tsp}.
 
 \begin{figure}[H]
 	\centering
@@ -65,5 +65,5 @@ Abbiamo provato varie esecuzioni dell'algoritmo di Held-Karp per verificare come
 \end{figure}
 
 \section{Conclusioni}
-L'algoritmo migliore tra i tre è l'euristica Nearest che presenta un tasso di errore minore, avvicinandosi di più alla soluzione ottima. La soluzione dell'euristica Nearest Neighbor è $O(log(n))$ - approssimata a TSP, quando la disuguaglianza triangolare è rispettata. La complessità Held-Karp con table filling ha complessità $O(n^2*2^n)$, che è esponenziale e interropendo l'esecuzione a 5 minuti non permette .
+L'algoritmo migliore tra i tre è l'euristica Nearest che presenta un tasso di errore minore, avvicinandosi di più alla soluzione ottima. La soluzione dell'euristica Nearest Neighbor è $log(n)$-approssimata per TSP, quando la disuguaglianza triangolare è rispettata. La complessità Held-Karp con table filling ha complessità $O(n^2*2^n)$, che è esponenziale e interropendo l'esecuzione a 5 minuti non permette .
 \end{document}
