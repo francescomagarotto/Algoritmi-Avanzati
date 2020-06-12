@@ -34,12 +34,12 @@ public class App {
                 Integer k = (Integer) n * n / 2 * log;
 
                 Integer resKarger = karger.Karger(g, 100);
-                System.out.print("file: " + f + "=> ");
+                System.out.print("file: " + f + " => ");
                 if (resKarger.equals(output_))
                     System.out.println("taglio minimo trovato");
                 else {
-                    Integer error = (resKarger - output_) / output_;
-                    System.out.println("errore del " + error + "%");
+                    Double error = ((double) resKarger - (double) output_) / (double) output_;
+                    System.out.println("errore dello " + error + " %");
                 }
 
             });

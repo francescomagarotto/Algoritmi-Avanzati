@@ -19,7 +19,7 @@ public class GraphReader {
                 dim++;
                 for (int i = 1; i < listDim; i++) {
                     Integer nextNode = Integer.parseInt(list[i]);
-                    if (!(currentNode > nextNode)) {
+                    if (!(currentNode > nextNode)) { // toglie doppi archi
                         Edge currentEdge = new Edge(currentNode, nextNode);
                         edges.add(currentEdge);
                     }
