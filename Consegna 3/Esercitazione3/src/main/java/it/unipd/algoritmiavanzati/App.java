@@ -14,18 +14,39 @@ import it.unipd.algoritmiavanzati.karger.*;
 
 public class App {
     public static void main(String[] args) {
-        try (Stream<Path> paths = Files.walk(Paths.get("mincut_dataset"))) {
+        double start = System.currentTimeMillis();
+        try {
+            Stream<Path> paths = Files.walk(Paths.get("mincut_dataset"));
             paths.filter(Files::isRegularFile).forEach(file -> {
                 String f = file.getFileName().toString();
+                String[] split = f.split("input_random_");
+                String outputString = "mincut_output/output_random_" + split[1];
+                Integer output_;
+                try {
+                    outputString = Files.lines(Paths.get(outputString)).iterator().next();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                output_ = Integer.parseInt(outputString);
                 Graph g = GraphReader.getGraph("mincut_dataset/" + f);
                 int n = g.getnVertex();
                 int log = (int) Math.log(n);
                 Integer k = (Integer) n * n / 2 * log;
-                Integer resKarger = karger.Karger(g, 1000);
-                System.out.println("min-cut for " + f + " = " + resKarger);
+
+                Integer resKarger = karger.Karger(g, 100);
+                System.out.print("file: " + f + "=> ");
+                if (resKarger.equals(output_))
+                    System.out.println("taglio minimo trovato");
+                else {
+                    Integer error = (resKarger - output_) / output_;
+                    System.out.println("errore del " + error + "%");
+                }
+
             });
         } catch (Exception ignored) {
             ignored.printStackTrace();
         }
+        double end = System.currentTimeMillis() - start;
+        System.out.println("tempo trascorso: " + end);
     }
 }
