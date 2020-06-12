@@ -21,10 +21,9 @@ public class karger {
     }
 
     public static Integer FullContraction(Graph g) {
-        HashMap<Integer, LinkedList<Edge>> adjListCopy = g.getAdjacencyLists();
         List<Edge> copyOfEdges = g.getEdges();
 
-        Integer numberOfNodes = adjListCopy.keySet().size();
+        Integer numberOfNodes = g.getnVertex();
         Integer nextNodeLabel = numberOfNodes + 1;
         Random rand = new Random();
         for (int i = 0; i < numberOfNodes - 2; i++) {
@@ -46,7 +45,7 @@ public class karger {
             Edge e = iterator.next();
             if ((e.getStart().equals(v) && e.getEnd().equals(u)))
                 iterator.remove();
-            else if ((e.getStart().equals(u) && e.getEnd().equals(v)))
+            if ((e.getStart().equals(u) && e.getEnd().equals(v)))
                 iterator.remove();
         }
 
@@ -55,7 +54,7 @@ public class karger {
             Edge e = iterator.next();
             if (e.getStart().equals(v) || e.getStart().equals(u))
                 e.setStart(nextNodeLabel);
-            else if (e.getEnd().equals(u) || e.getEnd().equals(v))
+            if (e.getEnd().equals(u) || e.getEnd().equals(v))
                 e.setEnd(nextNodeLabel);
         }
     }

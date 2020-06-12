@@ -18,7 +18,10 @@ public class App {
             paths.filter(Files::isRegularFile).forEach(file -> {
                 String f = file.getFileName().toString();
                 Graph g = GraphReader.getGraph("mincut_dataset/" + f);
-                Integer resKarger = karger.Karger(g, 10);
+                int n = g.getnVertex();
+                int log = (int) Math.log(n);
+                Integer k = (Integer) n * n / 2 * log;
+                Integer resKarger = karger.Karger(g, 1000);
                 System.out.println("min-cut for " + f + " = " + resKarger);
             });
         } catch (Exception ignored) {

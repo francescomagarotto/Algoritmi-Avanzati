@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "CodeLens (Launch) - Prova",
+      "request": "launch",
+      "mainClass": "it.unipd.algoritmiavanzati.Prova",
+      "projectName": "Esercitazione3"
+    },
+    {
+      "type": "java",
       "name": "Debug (Launch) - Current File",
       "request": "launch",
       "mainClass": "${file}"
@@ -15,6 +22,14 @@
       "name": "Debug (Launch)-App<Esercitazione3>",
       "request": "launch",
       "mainClass": "it.unipd.algoritmiavanzati.App",
+      "projectName": "Esercitazione3",
+      "cwd": "${workspaceFolder}/"
+    },
+    {
+      "type": "java",
+      "name": "Debug (Launch)-App<Prova>",
+      "request": "launch",
+      "mainClass": "it.unipd.algoritmiavanzati.Prova",
       "projectName": "Esercitazione3",
       "cwd": "${workspaceFolder}/"
     }
