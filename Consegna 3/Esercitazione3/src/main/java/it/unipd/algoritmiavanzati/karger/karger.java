@@ -9,15 +9,22 @@ import java.util.Random;
 import it.unipd.algoritmiavanzati.graph.*;
 
 public class karger {
-    public static Integer Karger(Graph g, int k) {
+
+    public static KargerResult Karger(Graph g, int k) {
         Integer min = Integer.MAX_VALUE;
         Integer t;
+        long startTime = System.currentTimeMillis();
+        long discoveryTime = startTime;
+
         for (int i = 0; i < k; i++) {
             t = FullContraction(g);
-            if (t < min)
+            if (t < min) {
                 min = t;
+                discoveryTime = System.currentTimeMillis();
+            }
         }
-        return min;
+
+        return new KargerResult(min, discoveryTime-startTime);
     }
 
     public static Integer FullContraction(Graph g) {

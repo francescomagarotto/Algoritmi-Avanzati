@@ -33,10 +33,13 @@ public class App {
                 int log = (int) Math.log(n);
                 Integer k = (Integer) n * n / 2 * log;
 
-                Integer resKarger = karger.Karger(g, 100);
+                KargerResult result = karger.Karger(g, 100);
+                Integer resKarger = result.min;
+                double discoveryTime = result.discoveryTime;
+
                 System.out.print("file: " + f + " => ");
                 if (resKarger.equals(output_))
-                    System.out.println("taglio minimo trovato");
+                    System.out.println("taglio minimo trovato  "+"Discovery Time: "+discoveryTime);
                 else {
                     Double error = ((double) resKarger - (double) output_) / (double) output_;
                     System.out.println("errore dello " + error + " %");
