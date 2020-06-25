@@ -16,7 +16,7 @@ public class karger {
         long currentTimeCounter = 0;
         for (int i = 0; i < k; i++) {
             currentTimeCounter = System.currentTimeMillis() - startTime;
-            if (currentTimeCounter > timeout)
+            if (currentTimeCounter > timeout) // timeout raggiunto
                 return new KargerResult(min, discoveryTime - startTime, currentTimeCounter);
             t = FullContraction(g);
             if (t < min) {

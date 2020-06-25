@@ -28,19 +28,19 @@ public class App {
             paths.filter(Files::isRegularFile).forEach(file -> {
                 String f = file.getFileName().toString();
                 String[] split = f.split("input_random_");
-                String index = split[1].split("_")[0];
-                String outputString = "mincut_output/output_random_" + split[1];
+                String index = split[1].split("_")[0]; //numero di indice del grafo
+                String outputString = "mincut_output/output_random_" + split[1]; // per estrarre il risultato dal corrispondente file di output
                 Integer output_;
                 try {
                     outputString = Files.lines(Paths.get(outputString)).iterator().next();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                output_ = Integer.parseInt(outputString);
+                output_ = Integer.parseInt(outputString); // risultato atteso, letto dal file
                 Graph g = GraphReader.getGraph("mincut_dataset/" + f);
-                int n = g.getnVertex();
-                Integer k = (int) (((n * n) / 2) * Math.log(n));
-                double timeout = 1000;
+                int n = g.getnVertex(); // numero vertici
+                Integer k = (int) (((n * n) / 2) * Math.log(n)); //numero iterazioni
+                double timeout = 10000;
                 KargerResult result = karger.Karger(g, k, timeout);
                 Integer resKarger = result.min;
                 double discoveryTime = result.discoveryTime;
@@ -70,7 +70,7 @@ public class App {
         }
         try (FileOutputStream fos = new FileOutputStream(filename);
                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
-                CSVWriter writer = new CSVWriter(osw, ';', CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter writer = new CSVWriter(osw, ',', CSVWriter.NO_QUOTE_CHARACTER,
                         CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
             writer.writeAll(entries);
         } catch (IOException ignored) {
