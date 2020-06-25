@@ -4,9 +4,11 @@ package it.unipd.algoritmiavanzati.karger;
 public class KargerResult {
   public int min;
   public long discoveryTime;
+  public long totalTime;
 
-  public KargerResult(int m, long d) {
-    min = m;
-    discoveryTime = d;
+  public KargerResult(int min, long discoveryTime, long totalTime) {
+    this.min = min;
+    this.discoveryTime = discoveryTime;
+    this.totalTime = totalTime;
   }
 }

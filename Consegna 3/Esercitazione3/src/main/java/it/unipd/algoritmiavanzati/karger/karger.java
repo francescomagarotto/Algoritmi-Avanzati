@@ -1,8 +1,6 @@
 package it.unipd.algoritmiavanzati.karger;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -10,21 +8,24 @@ import it.unipd.algoritmiavanzati.graph.*;
 
 public class karger {
 
-    public static KargerResult Karger(Graph g, int k) {
+    public static KargerResult Karger(Graph g, int k, double timeout) {
         Integer min = Integer.MAX_VALUE;
         Integer t;
         long startTime = System.currentTimeMillis();
         long discoveryTime = startTime;
-
+        long currentTimeCounter = 0;
         for (int i = 0; i < k; i++) {
+            currentTimeCounter = System.currentTimeMillis() - startTime;
+            if (currentTimeCounter > timeout)
+                return new KargerResult(min, discoveryTime - startTime, currentTimeCounter);
             t = FullContraction(g);
             if (t < min) {
                 min = t;
                 discoveryTime = System.currentTimeMillis();
             }
         }
-
-        return new KargerResult(min, discoveryTime-startTime);
+        currentTimeCounter = System.currentTimeMillis() - startTime;
+        return new KargerResult(min, discoveryTime - startTime, currentTimeCounter);
     }
 
     public static Integer FullContraction(Graph g) {
