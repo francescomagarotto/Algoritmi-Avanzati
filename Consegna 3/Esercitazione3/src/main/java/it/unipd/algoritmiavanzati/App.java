@@ -40,7 +40,7 @@ public class App {
                 Graph g = GraphReader.getGraph("mincut_dataset/" + f);
                 int n = g.getnVertex(); // numero vertici
                 Integer k = (int) (((n * n) / 2) * Math.log(n)); //numero iterazioni
-                double timeout = 10000;
+                double timeout = 60000;
                 KargerResult result = karger.Karger(g, k, timeout);
                 Integer resKarger = result.min;
                 double discoveryTime = result.discoveryTime;
