@@ -23,6 +23,10 @@ public class App {
     public static void main(String[] args) {
         double start = System.currentTimeMillis();
         final List<String[]> table = new ArrayList<String[]>();
+        table.add(
+                new String[] {"Indice","Numero vertici", "Numero ripetizioni", "Risultato atteso",
+                        "Tempo impiegato", "Discovery time", "Error", "Min cut"}
+                );
         try {
             Stream<Path> paths = Files.walk(Paths.get("mincut_dataset"));
             paths.filter(Files::isRegularFile).forEach(file -> {
@@ -53,7 +57,7 @@ public class App {
 
                 table.add(new String[] { index, String.valueOf(n), String.valueOf(k), String.valueOf(output_),
                         String.valueOf(result.totalTime), String.valueOf(result.discoveryTime),
-                        String.valueOf(error) });
+                        String.valueOf(error), String.valueOf(resKarger)});
             });
         } catch (Exception ignored) {
             ignored.printStackTrace();
@@ -70,7 +74,7 @@ public class App {
         }
         try (FileOutputStream fos = new FileOutputStream(filename);
                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
-                CSVWriter writer = new CSVWriter(osw, ',', CSVWriter.NO_QUOTE_CHARACTER,
+                CSVWriter writer = new CSVWriter(osw, ';', CSVWriter.NO_QUOTE_CHARACTER,
                         CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
             writer.writeAll(entries);
         } catch (IOException ignored) {
