@@ -25,7 +25,7 @@ public class App {
         final List<String[]> table = new ArrayList<String[]>();
         table.add(
                 new String[] {"Indice","Numero vertici", "Numero ripetizioni", "Risultato atteso",
-                        "Tempo impiegato", "Discovery time", "Error", "Min cut"}
+                        "Tempo impiegato", "Discovery time", "Media Full contraction", "Error", "Min cut"}
                 );
         try {
             Stream<Path> paths = Files.walk(Paths.get("mincut_dataset"));
@@ -45,7 +45,7 @@ public class App {
                 int n = g.getnVertex(); // numero vertici
                 Integer k = (int) (((n * n) / 2) * Math.log(n)); //numero iterazioni
                 double timeout = 60000;
-                KargerResult result = karger.Karger(g, k, timeout);
+                KargerResult result = Karger.solve(g, k, timeout);
                 Integer resKarger = result.min;
                 double discoveryTime = result.discoveryTime;
 
@@ -56,7 +56,7 @@ public class App {
                 System.out.println("errore dello " + error + " %");
 
                 table.add(new String[] { index, String.valueOf(n), String.valueOf(k), String.valueOf(output_),
-                        String.valueOf(result.totalTime), String.valueOf(result.discoveryTime),
+                        String.valueOf(result.totalTime), String.valueOf(result.discoveryTime), String.valueOf(result.fullContractionMeanTime),
                         String.valueOf(error), String.valueOf(resKarger)});
             });
         } catch (Exception ignored) {

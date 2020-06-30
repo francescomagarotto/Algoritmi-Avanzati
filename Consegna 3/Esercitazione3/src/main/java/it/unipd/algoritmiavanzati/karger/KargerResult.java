@@ -5,10 +5,11 @@ public class KargerResult {
   public int min;
   public long discoveryTime;
   public long totalTime;
-
-  public KargerResult(int min, long discoveryTime, long totalTime) {
+  public double fullContractionMeanTime;
+  public KargerResult(int min, long discoveryTime, long totalTime, double fullContractionMeanTime) {
     this.min = min;
     this.discoveryTime = discoveryTime;
     this.totalTime = totalTime;
+    this.fullContractionMeanTime = fullContractionMeanTime;
   }
 }

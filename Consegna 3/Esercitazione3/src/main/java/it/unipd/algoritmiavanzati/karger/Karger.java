@@ -1,31 +1,33 @@
 package it.unipd.algoritmiavanzati.karger;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import it.unipd.algoritmiavanzati.graph.*;
 
-public class karger {
+public class Karger {
 
-    public static KargerResult Karger(Graph g, int k, double timeout) {
+    public static KargerResult solve(Graph g, int k, double timeout) {
         Integer min = Integer.MAX_VALUE;
         Integer t;
         long startTime = System.currentTimeMillis();
         long discoveryTime = startTime;
+        Long fullContractionTimes = 0L;
         long currentTimeCounter = 0;
         for (int i = 0; i < k; i++) {
             currentTimeCounter = System.currentTimeMillis() - startTime;
             if (currentTimeCounter > timeout) // timeout raggiunto
-                return new KargerResult(min, discoveryTime - startTime, currentTimeCounter);
+                return new KargerResult(min, discoveryTime - startTime, currentTimeCounter, fullContractionTimes.doubleValue()/i);
+            var start = System.currentTimeMillis();
             t = FullContraction(g);
+            fullContractionTimes += (System.currentTimeMillis() - start);
             if (t < min) {
                 min = t;
                 discoveryTime = System.currentTimeMillis();
             }
         }
         currentTimeCounter = System.currentTimeMillis() - startTime;
-        return new KargerResult(min, discoveryTime - startTime, currentTimeCounter);
+        return new KargerResult(min, discoveryTime - startTime, currentTimeCounter, fullContractionTimes.doubleValue()/k);
     }
 
     public static Integer FullContraction(Graph g) {
