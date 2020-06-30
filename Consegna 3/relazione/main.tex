@@ -34,36 +34,36 @@
 \newpage
 
 \input{introduzione}
-\section{Risultati ottenuti}
+
+\section{Tabella}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=17cm]{tabellapdf}
+	\label{fig:tabellapdf}
 \end{figure}
-Come possiamo vedere dalla tabella, nell'algoritmo di Held-Karp solo poche istanze \textbf{non} sono andate in \textit{timeout}. Infatti, i grafi con tempo di esecuzione maggiore di circa 300 secondi, sono state interrotte. Pertanto l'83.3\% delle esecuzioni dell'algoritmo di Held-Karp ritorna la soluzione calcolata fino a quel momento, con un conseguente tasso di errore molto alto, anche del 2860\% come nel caso dell'istanza \texttt{dsj1000.tsp}.
 
+\section{Domanda 1}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{2approx}
-	\label{fig:2approx}
+	\includegraphics[width=17cm]{fullcontraction}
+	\label{fig:fullcontraction}
 \end{figure}
-Questa tabella invece mostra l'approssimazione calcolata dall'algoritmo è 2 approssimata. Infatti,
-$\frac{Soluzione}{Solzione\ ottima} \leq 2$
+
+\section{Domanda 2}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=17cm]{tempoesecvsnumnodi}
+	\label{fig:tempoesecvsnumnodi}
+\end{figure}
+
+\section{Domanda 3}
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=17cm]{errore}
-	\caption{Grafico che mette in relazione gli errori dei tre algoritmi utilizzando la scala logaritmica. Come era prevedibile dalla tabella sopra, l'errore maggiore è presente nell'algoritmo di Held-Karp, che in questi pochi esempi non è sempre crescente, poiché il numero di istanze è esiguo. Certamente con un numero di maggiore di nodi, avremmo due possibili scenari: mantenendo lo stesso tempo massimo di esecuzione, l'errore sarebbe molto alto, mentre aumentando il tempo di esecuzione, lo stack verrebbe riempito delle chiamate ricorsive, portando ad un'eccezione runtime OutOfMemory.}	\label{fig:errore}
+	\includegraphics[width=17cm]{discoveryvsfulltime}
+	\label{fig:discoveryvsfulltime}
 \end{center}
 \end{figure}
 
-\subsubsection{Tempo di timeout Held-Karp}
-Abbiamo provato varie esecuzioni dell'algoritmo di Held-Karp per verificare come varia l'errore in relazione al raddoppio del tempo prima del timeout.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.5\linewidth]{differenze_errori}
-	\label{fig:timeouttiming}
-	\caption{Tabella che mostra come l'errore sia variato in relazione all'aumento del tempo di esecuzione dell'algoritmo. In particolare, aumentando il tempo prima del timeout da 5 a 10 minuti, solo i grafi di dimensione compresa tra 20 e 100 hanno avuto un beneficio consistente. I grafi con un numero di nodi superiore a 200 hanno avuto un lieve beneficio, infatti il valore della soluzione è più esatto, dall'aumento del tempo di esecuzione. Tale variazione non ha però costituito una diminuzione dell'errore, arrotondato a due cifre decimali.}
-\end{figure}
-
+\section{Domanda 4}
 \section{Conclusioni}
-L'algoritmo migliore tra i tre è l'euristica Nearest che presenta un tasso di errore minore, avvicinandosi di più alla soluzione ottima. La soluzione dell'euristica Nearest Neighbor è $log(n)$-approssimata per TSP, quando la disuguaglianza triangolare è rispettata. La complessità dell'algoritmo di Held-Karp con table filling è $O(n^2*2^n)$, che è esponenziale. 
 \end{document}
