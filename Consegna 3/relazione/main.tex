@@ -66,6 +66,8 @@ Il tempo di esecuzione dell'algoritmo segue l'andamento della sua complessità a
 	\label{fig:discoveryvsfulltime}
 \end{center}
 \end{figure}
+Il grafico mette in relazione il discovery time vs il tempo impiegato applicando la scala logaritmica se il valore del tempo è maggiore di 0, altrimenti lasciamo zero. Come si può evincere dal grafico, fino a 10 nodi il tempo di esecuzione è brevissimo, e le due misurazioni sono equivalenti. È importante evidenziare che all'aumentare del numero di vertici le due misurazioni aumentano. Come evidenziato dal discovery time, nonostante il timeout, l'algoritmo riesce comunque a trovare il taglio minimo molto prima, ovviamente l'interruzione dell'esecuzione non permette di eseguire tutti i confronti necessari. 
+
 
 \section{Domanda 4}
 Come si può vedere nella tabella dei risultati nella sezione 2 il taglio ottenuto dall'algoritmo è esattamente il taglio minimo atteso. Questo perché, anche nelle istanze più grandi del dataset, l'algoritmo ha trovato la soluzione ottima prima del timeout di 60 secondi che abbiamo imposto. L'errore relativo è quindi 0 per ogni grafo.
