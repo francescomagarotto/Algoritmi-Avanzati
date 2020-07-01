@@ -9,7 +9,7 @@ public class Karger {
 
     public static KargerResult solve(Graph g, int k, double timeout) {
         Integer min = Integer.MAX_VALUE;
-        Integer t;
+        Integer t;    //result of FullContraction
         long startTime = System.currentTimeMillis();
         long discoveryTime = startTime;
         Long fullContractionTimes = 0L;

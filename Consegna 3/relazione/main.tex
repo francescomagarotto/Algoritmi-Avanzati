@@ -35,7 +35,7 @@
 
 \input{introduzione}
 
-\section{Tabella}
+\section{Tabella dei risultati}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=17cm]{tabellapdf}
@@ -48,6 +48,7 @@
 	\includegraphics[width=17cm]{fullcontraction}
 	\label{fig:fullcontraction}
 \end{figure}
+Il tempo medio per eseguire una Full-Contraction in base al numero di vertici rimane abbastanza vicino alla sua complessità asintotica
 
 \section{Domanda 2}
 \begin{figure}[H]
@@ -55,6 +56,8 @@
 	\includegraphics[width=17cm]{tempoesecvsnumnodi}
 	\label{fig:tempoesecvsnumnodi}
 \end{figure}
+Il numero di ripetizioni scelto è $k = (n^2)/2 * log(n)$ dove $n$ è il numero di vertici, in modo da garantire che la probabilità di sbagliare sia minore o uguale a $1/n$.
+Il tempo di esecuzione dell'algoritmo segue l'andamento della sua complessità asintotica, ma per i grafi più grandi è stato necessario introdurre un timeout di 60 secondi per mantenere un tempo di esecuzione totale ragionevole.
 
 \section{Domanda 3}
 \begin{figure}[H]
@@ -65,5 +68,9 @@
 \end{figure}
 
 \section{Domanda 4}
+Come si può vedere nella tabella dei risultati nella sezione 2 il taglio ottenuto dall'algoritmo è esattamente il taglio minimo atteso. Questo perché, anche nelle istanze più grandi del dataset, l'algoritmo ha trovato la soluzione ottima prima del timeout di 60 secondi che abbiamo imposto. L'errore relativo è quindi 0 per ogni grafo.
+
 \section{Conclusioni}
+L'algoritmo risulta molto efficace a risolvere il problema del minimum cut nonostante la sua semplicità. È interessante notare che il discovery time in genere è molto più breve del tempo di esecuzione totale, e che le iterazioni aggiuntive servono semplicemente a garantire che il risultato sia giusto con alta probabilità. Infatti anche le istanze da 200 vertici hanno ritornato il minimum cut nonostante siano state interrotte molto prima che l'algoritmo completasse tutte le iterazioni. Ovviamente imporre un timeout troppo piccolo riduce drasticamente la probabilità di successo, al punto di rendere l'algoritmo inaffidabile e poco utile per i grafi più grandi.
+
 \end{document}
