@@ -2,10 +2,10 @@
 
 è valutare le prestazioni dell'algoritmo di Karger per il problema del minimum cut rispetto a quattro parametri:
 \begin{itemize}
-\item Il tempo impiegato dalla procedura di Full Contraction
-\item Il tempo impiegato dall'algoritmo completo per ripetere la contrazione un numero sufficientemente alto di volte
-\item Il discovery time, ossia il momento in cui l'algoritmo trova per la prima volta il taglio di costo mimimo
-\item L'errore nella soluzione trovata rispetto al risultato ottimo
+    \item Il tempo impiegato dalla procedura di Full Contraction
+    \item Il tempo impiegato dall'algoritmo completo per ripetere la contrazione un numero sufficientemente alto di volte
+    \item Il discovery time, ossia il momento in cui l'algoritmo trova per la prima volta il taglio di costo mimimo
+    \item L'errore nella soluzione trovata rispetto al risultato ottimo
 \end{itemize}
 Il linguaggio di programmazione scelto dal nostro gruppo è Java.
 
@@ -20,25 +20,30 @@ Windows:\\
 \indent \texttt{mvnw.cmd install}\\
 \indent \texttt{mvnw.cmd exec:java}
 
-L'esecuzione del main genera automaticamente dei file csv nella directory del progetto contenenti i tempi registrati. 
+L'esecuzione del main genera automaticamente dei file csv nella directory del progetto contenenti i tempi registrati.
 L'algoritmo di Karger viene interrotto dopo 60 secondi.
 \subsection{Strutture dati utilizzate}
 
-Per rappresentare il grafo abbiamo utilizzato una lista di adiacenza, quindi ogni nodo contiene la lista dei lati adiacenti ad esso.
-Un lato viene trattato come un'istanza della classe \texttt{Edge}.
+Per rappresentare il grafo abbiamo utilizzato una lista di archi, dove ogni arco è rappresentato da un oggetto \texttt{Edge}.
+Ogni arco è da intendersi come indiretto, quindi un singolo arco rappresenta un collegamento in
+entrambi i versi.
 
 \subsection{Lettura di un grafo da file}
-Per caricare un grafo in memoria, abbiamo implementato una classe GraphReader, 
-che si occupa della lettura del file tramite la libreria \textit{nio} di Java. 
+Per caricare un grafo in memoria, abbiamo implementato una classe GraphReader,
+che si occupa della lettura del file tramite la libreria \textit{nio} di Java.
 La classe infine ritorna un'istanza della classe \texttt{Graph}.
 \subsection{Implementazione di Karger}
-L'algoritmo di Karger contiene un metodo \texttt{solve} che ha come parametri: il grafo, 
-il numero di ripetizioni da effettuare, e infine il timeout, ovvero la durata massima 
+L'algoritmo di Karger contiene un metodo \texttt{solve} che ha come parametri: il grafo,
+il numero di ripetizioni da effettuare, e infine il timeout, ovvero la durata massima
 dell'esecuzione dell'algoritmo.
-Per eseguire le misurazioni dei tempi di esecuzioni si fa uso dell'istruzione 
-\texttt{System.currentTimeMillis()} che ritorna il tempo attuale in ms. 
-Essendo il programma single thread non c'è il rischio che l'esecuzione venga interrotta e 
-quindi permette di ottenere misure affidabili. 
+Per eseguire le misurazioni dei tempi di esecuzioni si fa uso dell'istruzione
+\texttt{System.currentTimeMillis()} che ritorna il tempo attuale in ms.
+Essendo il programma single thread non c'è il rischio che l'esecuzione venga interrotta e
+quindi permette di ottenere misure affidabili.
 Infine, per quanto riguarda la codifica l'algoritmo si occupa di richiamare \texttt{k}-volte
 il metodo Full-Contraction calcolando il valore del taglio minimo.
 \subsubsection{Implementazione del metodo Full Contraction}
+Il metodo Full Contraction sceglie un arco in maniera casuale dalla lista degli archi del grafo, e rimuove
+tutti gli archi tra le due estremità dell'arco scelto. Per la contrazione utilizziamo una sottoprocedura \textttt{Contraction},
+che oltre alla rimozione si occupa di cambiare quegli archi che avevano estremità uno dei nodi cancellati, cambiandola
+con il nuovo nodo che rimpiazza i due nodi cancellati.

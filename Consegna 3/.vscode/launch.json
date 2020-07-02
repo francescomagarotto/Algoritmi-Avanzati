@@ -31,7 +31,7 @@
       "request": "launch",
       "mainClass": "it.unipd.algoritmiavanzati.Prova",
       "projectName": "Esercitazione3",
-      "cwd": "${workspaceFolder}/"
+      "cwd": "${workspaceFolder}/Eserciazione3"
     }
   ]
 }
