@@ -9,7 +9,7 @@ public class Karger {
 
     public static KargerResult solve(Graph g, int k, double timeout) {
         Integer min = Integer.MAX_VALUE;
-        Integer t;    //result of FullContraction
+        Integer t; //result of FullContraction
         long startTime = System.currentTimeMillis();
         long discoveryTime = startTime;
         Long fullContractionTimes = 0L;
@@ -17,7 +17,8 @@ public class Karger {
         for (int i = 0; i < k; i++) {
             currentTimeCounter = System.currentTimeMillis() - startTime;
             if (currentTimeCounter > timeout) // timeout raggiunto
-                return new KargerResult(min, discoveryTime - startTime, currentTimeCounter, fullContractionTimes.doubleValue()/i);
+                return new KargerResult(min, discoveryTime - startTime, currentTimeCounter,
+                        fullContractionTimes.doubleValue() / i);
             var start = System.currentTimeMillis();
             t = FullContraction(g);
             fullContractionTimes += (System.currentTimeMillis() - start);
@@ -27,7 +28,8 @@ public class Karger {
             }
         }
         currentTimeCounter = System.currentTimeMillis() - startTime;
-        return new KargerResult(min, discoveryTime - startTime, currentTimeCounter, fullContractionTimes.doubleValue()/k);
+        return new KargerResult(min, discoveryTime - startTime, currentTimeCounter,
+                fullContractionTimes.doubleValue() / k);
     }
 
     public static Integer FullContraction(Graph g) {
@@ -37,7 +39,9 @@ public class Karger {
         Integer nextNodeLabel = numberOfNodes + 1;
         Random rand = new Random();
         for (int i = 0; i < numberOfNodes - 2; i++) {
-            int randomIndex = rand.nextInt(copyOfEdges.size());
+            int randomIndex = rand.nextInt(copyOfEdges.size()); //scelta dell'arco
+
+            //prendo le due estremità che servono per cancellare gli archi e fare i collegamenti
             Integer u = copyOfEdges.get(randomIndex).getStart();
             Integer v = copyOfEdges.get(randomIndex).getEnd();
 
